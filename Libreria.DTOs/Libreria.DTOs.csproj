@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="DTOs\DTOsEnvio\" />
+    <Folder Include="DTOs\DTOsEnvioComun\" />
+    <Folder Include="DTOs\DTOsEnvioUrgente\" />
+    <Folder Include="Mappers\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Libreria.LogicaNegocio\Libreria.LogicaNegocio.csproj" />
+  </ItemGroup>
+
+</Project>
