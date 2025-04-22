@@ -22,30 +22,10 @@ namespace Libreria.LogicaAccesoDatos.Repositorios
             _context.SaveChanges();
             return nuevo.Id;
         }
-        public List<Usuario> FindAll()
-        {
-            return _context.Usuarios.ToList();
-        }
-
-        public Usuario FindByEmail(string email)
-        {
-            return _context.Usuarios.FirstOrDefault(u => u.Email == email);
-
-        }
-
         public Usuario FindById(int id)
         {
             return _context.Usuarios.Find(id);
         }
-
-        public List<Usuario> FindByTipoUsuario(int rol)
-        {
-            // Convertir el entero a RolUsuario
-            RolUsuario rolUsuario = (RolUsuario)rol;
-
-            return _context.Usuarios.Where(u => u.Rol == rolUsuario).ToList();
-        }
-
         public void Remove(int id)
         {
             Usuario usuario = _context.Usuarios.Find(id);
@@ -55,10 +35,31 @@ namespace Libreria.LogicaAccesoDatos.Repositorios
                 _context.SaveChanges();
             }
         }
+        public List<Usuario> FindAll()
+        {
+            return _context.Usuarios.ToList();
+        }
         public void Update(Usuario obj)
         {
             _context.Usuarios.Update(obj);
             _context.SaveChanges();
         }
+        public Usuario FindByEmail(string email)
+        {
+            return _context.Usuarios.FirstOrDefault(u => u.Email == email);
+
+        }
+        public List<Usuario> FindByTipoUsuario(int rol)
+        {
+            // Convertir el entero a RolUsuario
+            RolUsuario rolUsuario = (RolUsuario)rol;
+
+            return _context.Usuarios.Where(u => u.Rol == rolUsuario).ToList();
+        }
+        public bool ExisteUsuario(string email)
+        {
+            return _context.Usuarios.Any(u => u.Email == email);
+        }
+
     }
 }

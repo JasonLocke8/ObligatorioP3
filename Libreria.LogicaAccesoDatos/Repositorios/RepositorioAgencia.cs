@@ -21,17 +21,30 @@ namespace Libreria.LogicaAccesoDatos.Repositorios
             _context.SaveChanges();
             return nuevo.Id;
         }
-
-        public List<Agencia> FindAll()
-        {
-            return _context.Agencias.ToList();
-        }
-
         public Agencia FindById(int id)
         {
             return _context.Agencias.Find(id);
         }
+        public void Remove(int id)
+        {
+            Agencia agencia = _context.Agencias.Find(id);
 
+            if (agencia != null)
+            {
+                _context.Agencias.Remove(agencia);
+                _context.SaveChanges();
+            }
+
+        }
+        public List<Agencia> FindAll()
+        {
+            return _context.Agencias.ToList();
+        }
+        public void Update(Agencia obj)
+        {
+            _context.Agencias.Update(obj);
+            _context.SaveChanges();
+        }
         public List<Agencia> FindByNombre(string nombre)
         {
 
@@ -39,22 +52,8 @@ namespace Libreria.LogicaAccesoDatos.Repositorios
             
         }
 
-        public void Remove(int id)
-        {
-            Agencia agencia = _context.Agencias.Find(id);
-            
-            if (agencia != null)
-            {
-                _context.Agencias.Remove(agencia);
-                _context.SaveChanges();
-            }
-            
-        }
+        
 
-        public void Update(Agencia obj)
-        {
-            _context.Agencias.Update(obj);
-            _context.SaveChanges();
-        }
+        
     }
 }

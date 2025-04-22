@@ -1,5 +1,7 @@
 using Libreria.LogicaAccesoDatos;
 using Libreria.LogicaAccesoDatos.Repositorios;
+using Libreria.LogicaAplicacion.CasosUso.CUUsuario;
+using Libreria.LogicaAplicacion.InterfacesCasosUso.ICUUsuario;
 using Libreria.LogicaNegocio.InterfacesRepositorios;
 using Microsoft.EntityFrameworkCore;
 
@@ -24,6 +26,9 @@ namespace ObligatorioP3
             builder.Services.AddScoped<IRepositorioEnvioUrgente, RepositorioEnvioUrgente>();
             builder.Services.AddScoped<IRepositorioSeguimientoEnvio, RepositorioSeguimientoEnvio>();
             builder.Services.AddScoped<IRepositorioUsuario, RepositorioUsuario>();
+            builder.Services.AddScoped<IRepositorioAuditoria, RepositorioAuditoria>();
+            builder.Services.AddScoped<ICUAltaUsuario, CUAltaUsuario>();
+            builder.Services.AddScoped<ICUListarUsuario, CUListarUsuario>();
 
 
 

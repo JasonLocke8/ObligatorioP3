@@ -12,5 +12,6 @@ namespace Libreria.LogicaNegocio.InterfacesRepositorios
     {
         Usuario FindByEmail(string email);
         List<Usuario> FindByTipoUsuario(int rol);
+        bool ExisteUsuario(string email);
     }
 }

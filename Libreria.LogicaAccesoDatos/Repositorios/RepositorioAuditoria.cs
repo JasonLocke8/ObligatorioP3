@@ -24,17 +24,14 @@ namespace Libreria.LogicaAccesoDatos.Repositorios
             return nuevo.Id;
 
         }
-
-        public List<Auditoria> FindAll()
-        {
-            return _context.Auditorias.ToList();
-        }
-
         public Auditoria FindById(int id)
         {
             return _context.Auditorias.Find(id);
         }
-
+        public List<Auditoria> FindAll()
+        {
+            return _context.Auditorias.ToList();
+        }
         public void Remove(int id)
         {
             Auditoria auditoria = _context.Auditorias.Find(id);
@@ -44,7 +41,6 @@ namespace Libreria.LogicaAccesoDatos.Repositorios
                 _context.SaveChanges();
             }
         }
-
         public void Update(Auditoria obj)
         {
             _context.Auditorias.Update(obj);

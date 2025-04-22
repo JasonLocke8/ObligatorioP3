@@ -25,18 +25,11 @@ namespace Libreria.LogicaAccesoDatos.Repositorios
             return nuevo.Id;
 
         }
-
-        public List<EnvioComun> FindAll()
-        {
-            return _context.EnviosComunes.ToList();
-        }
-
         public EnvioComun FindById(int id)
         {
             return _context.EnviosComunes.Find(id);
 
         }
-
         public void Remove(int id)
         {
             EnvioComun envio = _context.EnviosComunes.Find(id);
@@ -47,7 +40,10 @@ namespace Libreria.LogicaAccesoDatos.Repositorios
             }
 
         }
-
+        public List<EnvioComun> FindAll()
+        {
+            return _context.EnviosComunes.ToList();
+        }
         public void Update(EnvioComun obj)
         {
 
