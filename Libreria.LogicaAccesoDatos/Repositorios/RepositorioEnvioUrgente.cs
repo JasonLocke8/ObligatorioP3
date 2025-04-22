@@ -16,10 +16,6 @@ namespace Libreria.LogicaAccesoDatos.Repositorios
             _context.SaveChanges();
             return nuevo.Id;
         }
-        public List<EnvioUrgente> FindAll()
-        {
-            return _context.EnviosUrgentes.ToList();
-        }
         public EnvioUrgente FindById(int id)
         {
             return _context.EnviosUrgentes.Find(id);
@@ -32,6 +28,10 @@ namespace Libreria.LogicaAccesoDatos.Repositorios
                 _context.EnviosUrgentes.Remove(envio);
                 _context.SaveChanges();
             }
+        }
+        public List<EnvioUrgente> FindAll()
+        {
+            return _context.EnviosUrgentes.ToList();
         }
         public void Update(EnvioUrgente obj)
         {

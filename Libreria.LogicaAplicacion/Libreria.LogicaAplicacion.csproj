@@ -7,14 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="CasosUso\" />
-    <Folder Include="InterfacesCasosUso\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Libreria.DTOs\Libreria.DTOs.csproj" />
     <ProjectReference Include="..\Libreria.LogicaAccesoDatos\Libreria.LogicaAccesoDatos.csproj" />
     <ProjectReference Include="..\Libreria.LogicaNegocio\Libreria.LogicaNegocio.csproj" />
+    <ProjectReference Include="..\Libreria.Utilidades\Libreria.Utilidades.csproj" />
   </ItemGroup>
 
 </Project>

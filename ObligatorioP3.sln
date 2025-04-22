@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35828.75 d17.13
+VisualStudioVersion = 17.13.35828.75
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ObligatorioP3", "ObligatorioP3\ObligatorioP3.csproj", "{55149F21-54C6-4468-8CE2-EFC5691B9D21}"
 EndProject
@@ -12,6 +12,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Libreria.LogicaAplicacion", "Libreria.LogicaAplicacion\Libreria.LogicaAplicacion.csproj", "{D5B56F9F-D81B-45FC-8E28-4868C045EF1C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Libreria.LogicaNegocio", "Libreria.LogicaNegocio\Libreria.LogicaNegocio.csproj", "{57ED0876-78C0-416C-BF3F-7610517397EA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Libreria.Utilidades", "Libreria.Utilidades\Libreria.Utilidades.csproj", "{087258E3-4BE4-411C-BEDA-B92D4856951C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{57ED0876-78C0-416C-BF3F-7610517397EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{57ED0876-78C0-416C-BF3F-7610517397EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{57ED0876-78C0-416C-BF3F-7610517397EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{087258E3-4BE4-411C-BEDA-B92D4856951C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{087258E3-4BE4-411C-BEDA-B92D4856951C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{087258E3-4BE4-411C-BEDA-B92D4856951C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{087258E3-4BE4-411C-BEDA-B92D4856951C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

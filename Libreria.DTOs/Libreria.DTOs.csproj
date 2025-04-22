@@ -10,7 +10,6 @@
     <Folder Include="DTOs\DTOsEnvio\" />
     <Folder Include="DTOs\DTOsEnvioComun\" />
     <Folder Include="DTOs\DTOsEnvioUrgente\" />
-    <Folder Include="Mappers\" />
   </ItemGroup>
 
   <ItemGroup>
