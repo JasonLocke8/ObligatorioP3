@@ -25,15 +25,13 @@ namespace Libreria.LogicaAplicacion.CasosUso.CUAutenticacion
             Usuario usuario = _repositorioUsuario.FindByEmail(dto.Email);
 
 
-            bool coincide = Utilidades.Crypto.VerifyPasswordConBcrypt(dto.Password, usuario.Password);
-
-            if (coincide)
+            if (usuario == null || !Utilidades.Crypto.VerifyPasswordConBcrypt(dto.Password, usuario.Password))
             {
-                return new DTOUsuario(usuario.Id, usuario.Nombre, usuario.Apellido, usuario.Email, usuario.Rol.ToString());
+                throw new Exception("El email o la contraseña son incorrectos");
             }
             else
             {
-                throw new Exception("El email o la contraseña son incorrectos");
+                return new DTOUsuario(usuario.Id, usuario.Nombre, usuario.Apellido, usuario.Email, usuario.Rol.ToString());
             }
 
         }

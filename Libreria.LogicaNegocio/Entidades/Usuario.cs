@@ -31,7 +31,12 @@ namespace Libreria.LogicaNegocio.Entidades
             Apellido = apellido;
             Email = email;
             Password = password;
+            Validar();
 
+        }
+
+        public void Validar()
+        {
             if (String.IsNullOrEmpty(Nombre))
             {
                 throw new NombreNoValidoException("El nombre no puede ser vacío");
@@ -40,7 +45,7 @@ namespace Libreria.LogicaNegocio.Entidades
             {
                 throw new ApellidoNoValidoException("El apellido no puede ser vacío");
             }
-            if (String.IsNullOrEmpty(Email) || !email.Contains('@'))
+            if (String.IsNullOrEmpty(Email) || !Email.Contains('@'))
             {
                 throw new EmailNoValidoException("El email no contiene @ o está vacío");
             }
@@ -48,7 +53,12 @@ namespace Libreria.LogicaNegocio.Entidades
             {
                 throw new PasswordNoValidoException("La contraseña no puede ser vacío");
             }
-        }        
+            if ((int)Rol < 1 || (int)Rol > 3)
+            {
+                throw new RolNoValido("El rol no es válido");
+            }
+
+        }
 
     }
 }

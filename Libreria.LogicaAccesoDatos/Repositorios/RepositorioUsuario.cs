@@ -56,10 +56,14 @@ namespace Libreria.LogicaAccesoDatos.Repositorios
 
             return _context.Usuarios.Where(u => u.Rol == rolUsuario).ToList();
         }
-        public bool ExisteUsuario(string email)
+        public bool ExisteUsuario(int id)
+        {
+            return _context.Usuarios.Any(u => u.Id == id);
+        }
+
+        public bool ExisteUsuarioEmail(string email)
         {
             return _context.Usuarios.Any(u => u.Email == email);
         }
-
     }
 }

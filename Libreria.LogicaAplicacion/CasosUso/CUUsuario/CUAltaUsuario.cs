@@ -3,7 +3,6 @@ using Libreria.DTOs.Mappers;
 using Libreria.LogicaAplicacion.InterfacesCasosUso.ICUUsuario;
 using Libreria.LogicaNegocio.CustomExceptions.UsuarioExceptions;
 using Libreria.LogicaNegocio.Entidades;
-using Libreria.LogicaNegocio.Enumerados;
 using Libreria.LogicaNegocio.InterfacesRepositorios;
 using System;
 using System.Collections.Generic;
@@ -25,15 +24,15 @@ namespace Libreria.LogicaAplicacion.CasosUso.CUUsuario
         public void AltaUsuario(DTOUsuario dtoUsuario)
         {
             // Buscar si el usuario ya existe
-            bool u = _repositorioUsuario.ExisteUsuario(dtoUsuario.Email);
 
-            if (u == true)
+            if (_repositorioUsuario.ExisteUsuarioEmail(dtoUsuario.Email))
             {
                 throw new UsuarioExiste("El usuario ya existe.");
             }
 
             dtoUsuario.Password = BCrypt.Net.BCrypt.HashPassword(dtoUsuario.Password);
-            Usuario nuevo = MapperUsuario.FromAltaUsuarioToUsuario(dtoUsuario);
+            Usuario nuevo = MapperUsuario.FromDTOUsuarioToUsuario(dtoUsuario);
+            nuevo.Validar();
             _repositorioUsuario.Add(nuevo);
         }
     }
