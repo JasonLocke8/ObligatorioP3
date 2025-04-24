@@ -12,7 +12,7 @@ namespace Libreria.DTOs.Mappers
 {
     public class MapperUsuario
     {
-        public static Usuario FromAltaUsuarioToUsuario(DTOUsuario dto)
+        public static Usuario FromDTOUsuarioToUsuario(DTOUsuario dto)
         {
             Usuario usuario = new Usuario();
             usuario.Id = dto.Id;
@@ -34,6 +34,11 @@ namespace Libreria.DTOs.Mappers
                 listaDTO.Add(dto);
             }
             return listaDTO;
+        }
+
+        public static DTOUsuario FromUsuarioToDTOUsuario(Usuario usuario)
+        {
+            return new DTOUsuario(usuario.Id, usuario.Nombre, usuario.Apellido, usuario.Email, usuario.Rol.ToString());
         }
     }
 }

@@ -1,10 +1,4 @@
 ﻿using Libreria.LogicaNegocio.Entidades;
-using Libreria.LogicaNegocio.Enumerados;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Libreria.LogicaNegocio.InterfacesRepositorios
 {
@@ -12,6 +6,7 @@ namespace Libreria.LogicaNegocio.InterfacesRepositorios
     {
         Usuario FindByEmail(string email);
         List<Usuario> FindByTipoUsuario(int rol);
-        bool ExisteUsuario(string email);
+        bool ExisteUsuario(int id);
+        bool ExisteUsuarioEmail(string email);
     }
 }

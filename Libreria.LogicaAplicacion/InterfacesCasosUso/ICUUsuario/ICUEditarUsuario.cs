@@ -7,11 +7,8 @@ using System.Threading.Tasks;
 
 namespace Libreria.LogicaAplicacion.InterfacesCasosUso.ICUUsuario
 {
-    public interface ICUListarUsuario
+    public interface ICUEditarUsuario
     {
-        List<DTOUsuario> ListarUsuario();
-
-        DTOUsuario ListarUsuarioPorId(int id);
-
+        void EditarUsuario(DTOUsuario dtoUsuario);
     }
 }

@@ -28,5 +28,21 @@ namespace Libreria.LogicaAplicacion.CasosUso.CUUsuario
 
             return listaDTO;
         }
+
+        public DTOUsuario ListarUsuarioPorId(int id)
+        {
+
+            Usuario usuario = _repositorioUsuario.FindById(id);
+            if (usuario == null)
+            {
+                throw new Exception("Usuario no encontrado");
+            }
+            else
+            {
+                DTOUsuario dtoUsuario = MapperUsuario.FromUsuarioToDTOUsuario(usuario);
+                return dtoUsuario;
+            }
+
+        }
     }
 }

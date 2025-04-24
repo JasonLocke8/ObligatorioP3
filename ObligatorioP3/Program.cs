@@ -27,13 +27,12 @@ namespace ObligatorioP3
             builder.Services.AddScoped<IRepositorioSeguimientoEnvio, RepositorioSeguimientoEnvio>();
             builder.Services.AddScoped<IRepositorioUsuario, RepositorioUsuario>();
             builder.Services.AddScoped<IRepositorioAuditoria, RepositorioAuditoria>();
-            builder.Services.AddScoped<ICUAltaUsuario, CUAltaUsuario>();
-            builder.Services.AddScoped<ICUListarUsuario, CUListarUsuario>();
-
-
 
             //DI - CASOS USO
-            //builder.Services.AddScoped<ICUAltaGenero, CUAltaGenero>();
+            builder.Services.AddScoped<ICUAltaUsuario, CUAltaUsuario>();
+            builder.Services.AddScoped<ICUListarUsuario, CUListarUsuario>();
+            builder.Services.AddScoped<ICUEditarUsuario, CUEditarUsuario>();
+            builder.Services.AddScoped<ICUEliminarUsuario, CUEliminarUsuario>();
 
             var app = builder.Build();
 
