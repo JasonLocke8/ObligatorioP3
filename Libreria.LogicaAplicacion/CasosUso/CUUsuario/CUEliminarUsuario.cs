@@ -1,4 +1,5 @@
 ﻿using Libreria.LogicaAplicacion.InterfacesCasosUso.ICUUsuario;
+using Libreria.LogicaNegocio.CustomExceptions.SharedExceptions;
 using Libreria.LogicaNegocio.CustomExceptions.UsuarioExceptions;
 using Libreria.LogicaNegocio.InterfacesRepositorios;
 using System;
@@ -30,7 +31,7 @@ namespace Libreria.LogicaAplicacion.CasosUso.CUUsuario
             // Verificar si el usuario fue eliminado correctamente
             if (_repositorioUsuario.ExisteUsuario(id))
             {
-                throw new Exception("No se pudo eliminar el usuario");
+                throw new NoEliminacion("No se pudo eliminar el usuario");
             }
 
         }

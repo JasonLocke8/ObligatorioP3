@@ -12,6 +12,5 @@ namespace Libreria.LogicaAplicacion.InterfacesCasosUso.ICUUsuario
         List<DTOUsuario> ListarUsuario();
 
         DTOUsuario ListarUsuarioPorId(int id);
-
     }
 }

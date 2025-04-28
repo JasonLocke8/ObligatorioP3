@@ -17,6 +17,7 @@ namespace Libreria.LogicaNegocio.VO
         {
             Latitud = latitud;
             Longitud = longitud;
+            Validar();
         }
 
         public void Validar()

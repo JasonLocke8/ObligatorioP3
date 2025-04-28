@@ -1,6 +1,8 @@
 using Libreria.LogicaAccesoDatos;
 using Libreria.LogicaAccesoDatos.Repositorios;
 using Libreria.LogicaAplicacion.CasosUso.CUUsuario;
+using Libreria.LogicaAplicacion.CasosUso.CUAgencia;
+using Libreria.LogicaAplicacion.InterfacesCasosUso.ICUAgencia;
 using Libreria.LogicaAplicacion.InterfacesCasosUso.ICUUsuario;
 using Libreria.LogicaNegocio.InterfacesRepositorios;
 using Microsoft.EntityFrameworkCore;
@@ -29,10 +31,19 @@ namespace ObligatorioP3
             builder.Services.AddScoped<IRepositorioAuditoria, RepositorioAuditoria>();
 
             //DI - CASOS USO
+
+            // Usuario
             builder.Services.AddScoped<ICUAltaUsuario, CUAltaUsuario>();
             builder.Services.AddScoped<ICUListarUsuario, CUListarUsuario>();
             builder.Services.AddScoped<ICUEditarUsuario, CUEditarUsuario>();
             builder.Services.AddScoped<ICUEliminarUsuario, CUEliminarUsuario>();
+
+            // Agencia
+            builder.Services.AddScoped<ICUAltaAgencia, CUAltaAgencia>();
+            builder.Services.AddScoped<ICUListarAgencia, CUListarAgencia>();
+            builder.Services.AddScoped<ICUEditarAgencia, CUEditarAgencia>();
+            builder.Services.AddScoped<ICUEliminarAgencia, CUEliminarAgencia>();
+
 
             var app = builder.Build();
 

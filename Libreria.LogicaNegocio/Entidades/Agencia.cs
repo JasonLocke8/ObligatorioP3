@@ -25,6 +25,22 @@ namespace Libreria.LogicaNegocio.Entidades
 
         }
 
+        public void Validar()
+        {
+            if (String.IsNullOrEmpty(Nombre))
+            {
+                throw new Exception("El nombre no puede ser vacío");
+            }
+            if (Direccion == null)
+            {
+                throw new Exception("La dirección no puede ser vacío");
+            }
+            if (Coordenadas == null)
+            {
+                throw new Exception("Las coordenadas no pueden ser vacío");
+            }
+        }
+
         public Agencia()
         {
 

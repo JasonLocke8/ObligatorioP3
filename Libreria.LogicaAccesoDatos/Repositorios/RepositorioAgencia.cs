@@ -52,8 +52,14 @@ namespace Libreria.LogicaAccesoDatos.Repositorios
             
         }
 
-        
+        public bool ExisteAgencia(int id)
+        {
+            return _context.Agencias.Any(a => a.Id == id);
+        }
 
-        
+        public bool ExisteAgenciaNombre(string nombre)
+        {
+            return _context.Agencias.Any(a => a.Nombre == nombre);
+        }
     }
 }
