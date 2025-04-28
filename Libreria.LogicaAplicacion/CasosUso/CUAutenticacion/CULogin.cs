@@ -1,5 +1,6 @@
 ﻿using Libreria.DTOs.DTOs.DTOsUsuario;
 using Libreria.LogicaAplicacion.InterfacesCasosUso.ICUAutenticacion;
+using Libreria.LogicaNegocio.CustomExceptions.AutenticacionExceptions;
 using Libreria.LogicaNegocio.Entidades;
 using Libreria.LogicaNegocio.InterfacesRepositorios;
 using System;
@@ -19,19 +20,28 @@ namespace Libreria.LogicaAplicacion.CasosUso.CUAutenticacion
             _repositorioUsuario = repositorioUsuario;
         }
 
-        public DTOUsuario Login(DTOUsuario dto)
+        public DTOUsuario ValidarLogin(DTOUsuario dto)
         {
-
-            Usuario usuario = _repositorioUsuario.FindByEmail(dto.Email);
-
-
-            if (usuario == null || !Utilidades.Crypto.VerifyPasswordConBcrypt(dto.Password, usuario.Password))
+            try
             {
-                throw new Exception("El email o la contraseña son incorrectos");
+                Usuario usuario = _repositorioUsuario.FindByEmail(dto.Email);
+
+
+                if (usuario != null && Utilidades.Crypto.VerifyPasswordConBcrypt(dto.Password, usuario.Password))
+                {
+                    DTOUsuario ret = new DTOUsuario();
+                    ret.Id = usuario.Id;
+                    ret.Rol = usuario.Rol.ToString();
+                    return ret;
+                }
+                else
+                {
+                    throw new MalasCredenciales("Error de credenciales.");
+                }
             }
-            else
+            catch (Exception e)
             {
-                return new DTOUsuario(usuario.Id, usuario.Nombre, usuario.Apellido, usuario.Email, usuario.Rol.ToString());
+                throw e;
             }
 
         }

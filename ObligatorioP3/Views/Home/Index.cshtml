@@ -1,8 +1,18 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@{  
+   ViewData["Title"] = "Home Page";  
+}  
+
+@if (ViewBag.Mensaje != null)
+{
+    <div class="alert alert-info">
+        @ViewBag.Mensaje
+    </div>
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="d-flex justify-content-center align-items-center vh-100">  
+  <div class="text-center">  
+     <h1 class="display-4">DAC Envios</h1>  
+     <p class="lead">Bienvenido a la aplicación de gestión de envíos.</p>  
+     <a class="btn btn-primary" href="/Usuario/Login">Ingresar</a>  
+  </div>  
 </div>

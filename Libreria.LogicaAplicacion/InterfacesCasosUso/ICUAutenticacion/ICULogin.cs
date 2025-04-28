@@ -9,6 +9,6 @@ namespace Libreria.LogicaAplicacion.InterfacesCasosUso.ICUAutenticacion
 {
     public interface ICULogin
     {
-        DTOUsuario Login(DTOUsuario dto);
+        DTOUsuario ValidarLogin(DTOUsuario dto);
     }
 }

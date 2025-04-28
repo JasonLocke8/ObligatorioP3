@@ -6,6 +6,8 @@ using Libreria.LogicaAplicacion.InterfacesCasosUso.ICUAgencia;
 using Libreria.LogicaAplicacion.InterfacesCasosUso.ICUUsuario;
 using Libreria.LogicaNegocio.InterfacesRepositorios;
 using Microsoft.EntityFrameworkCore;
+using Libreria.LogicaAplicacion.CasosUso.CUAutenticacion;
+using Libreria.LogicaAplicacion.InterfacesCasosUso.ICUAutenticacion;
 
 namespace ObligatorioP3
 {
@@ -44,6 +46,12 @@ namespace ObligatorioP3
             builder.Services.AddScoped<ICUEditarAgencia, CUEditarAgencia>();
             builder.Services.AddScoped<ICUEliminarAgencia, CUEliminarAgencia>();
 
+            // Envios
+
+            // Login
+            builder.Services.AddScoped<ICULogin, CULogin>();
+            builder.Services.AddSession();
+
 
             var app = builder.Build();
 
@@ -52,10 +60,12 @@ namespace ObligatorioP3
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+
+            app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseSession();
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(
