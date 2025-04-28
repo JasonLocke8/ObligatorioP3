@@ -1,6 +1,7 @@
 ﻿using Libreria.DTOs.DTOs.DTOsUsuario;
 using Libreria.DTOs.Mappers;
 using Libreria.LogicaAplicacion.InterfacesCasosUso.ICUUsuario;
+using Libreria.LogicaNegocio.CustomExceptions.UsuarioExceptions;
 using Libreria.LogicaNegocio.Entidades;
 using Libreria.LogicaNegocio.InterfacesRepositorios;
 using System;
@@ -35,7 +36,7 @@ namespace Libreria.LogicaAplicacion.CasosUso.CUUsuario
             Usuario usuario = _repositorioUsuario.FindById(id);
             if (usuario == null)
             {
-                throw new Exception("Usuario no encontrado");
+                throw new UsuarioNoExiste("Usuario no encontrado");
             }
             else
             {

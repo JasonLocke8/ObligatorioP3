@@ -12,5 +12,9 @@ namespace Libreria.LogicaNegocio.InterfacesRepositorios
 
         List<Agencia> FindByNombre(string nombre);
 
+        bool ExisteAgencia(int id);
+
+        bool ExisteAgenciaNombre(string nombre);
+
     }
 }

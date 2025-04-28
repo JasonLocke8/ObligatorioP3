@@ -124,20 +124,6 @@ namespace ObligatorioP3.Controllers
 
         }
 
-        //public IActionResult EliminarUsuario(int id)
-        //{
-        //    try
-        //    {
-        //        DTOUsuario usuario = _cuListarUsuario.ListarUsuarioPorId(id);
-        //        return View(usuario);
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        ViewBag.Mensaje = e.Message;
-        //        return View();
-        //    }
-        //}
-
         [HttpPost]
         public IActionResult EliminarUsuario(int id)
         {

@@ -10,14 +10,20 @@ namespace Libreria.DTOs.DTOs.DTOsAgencia
     {
         public int Id { get; set; }
         public string Nombre { get; set; }
-        public string Direccion { get; set; }
-        public string Coordenadas { get; set; }
-        public DTOAgencia(int id, string nombre, string direccion, string coordenadas)
+        public string Calle { get; set; }
+        public int NroPuerta { get; set; }
+        public string Departamento { get; set; }
+        public double Latitud { get; set; }
+        public double Longitud { get; set; }
+        public DTOAgencia(int id, string nombre, string calle, int nroPuerta, string departamento, double latitud, double longitud)
         {
             Id = id;
             Nombre = nombre;
-            Direccion = direccion;
-            Coordenadas = coordenadas;
+            Calle = calle;
+            NroPuerta = nroPuerta;
+            Departamento = departamento;
+            Latitud = latitud;
+            Longitud = longitud;
         }
         public DTOAgencia()
         {
