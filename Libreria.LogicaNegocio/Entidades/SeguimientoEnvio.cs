@@ -9,6 +9,7 @@ namespace Libreria.LogicaNegocio.Entidades
     public class SeguimientoEnvio
     {
         public int Id { get; set; }
+        public int EnvioId { get; set; }
         public Envio Envio { get; set; }
         public string Comentario { get; set; }
         public DateTime FechaComentario { get; set; }

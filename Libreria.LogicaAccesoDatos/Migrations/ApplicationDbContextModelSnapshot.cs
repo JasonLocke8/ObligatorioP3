@@ -105,6 +105,9 @@ namespace Libreria.LogicaAccesoDatos.Migrations
                     b.Property<DateTime>("FechaCreacion")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime?>("FechaEntrega")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("NroTracking")
                         .HasColumnType("int");
 
@@ -203,7 +206,7 @@ namespace Libreria.LogicaAccesoDatos.Migrations
                 {
                     b.HasBaseType("Libreria.LogicaNegocio.Entidades.Envio");
 
-                    b.Property<bool>("EntregaEficiente")
+                    b.Property<bool?>("EntregaEficiente")
                         .HasColumnType("bit");
 
                     b.HasDiscriminator().HasValue("EnvioUrgente");
@@ -270,7 +273,7 @@ namespace Libreria.LogicaAccesoDatos.Migrations
                         .IsRequired();
 
                     b.HasOne("Libreria.LogicaNegocio.Entidades.Envio", "Envio")
-                        .WithMany()
+                        .WithMany("Seguimientos")
                         .HasForeignKey("EnvioId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -322,6 +325,11 @@ namespace Libreria.LogicaAccesoDatos.Migrations
 
                     b.Navigation("Direccion")
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Libreria.LogicaNegocio.Entidades.Envio", b =>
+                {
+                    b.Navigation("Seguimientos");
                 });
 #pragma warning restore 612, 618
         }

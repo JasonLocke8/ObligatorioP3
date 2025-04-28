@@ -53,7 +53,7 @@ namespace Libreria.LogicaNegocio.Entidades
             {
                 throw new PasswordNoValidoException("La contraseña no puede ser vacío");
             }
-            if ((int)Rol < 1 || (int)Rol > 3)
+            if ((int)Rol < 0 || (int)Rol > 2)
             {
                 throw new RolNoValido("El rol no es válido");
             }

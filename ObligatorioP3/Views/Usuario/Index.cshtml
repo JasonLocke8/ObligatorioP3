@@ -1,0 +1,51 @@
+﻿@{
+    ViewData["Title"] = "Usuarios";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var userRole = Context.Session.GetString("LogueadoRol");
+}
+
+@if (TempData["Mensaje"] != null)
+{
+    <div class="alert alert-warning">
+        @TempData["Mensaje"]
+    </div>
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="mb-4">Gestión de Usuarios</h1>
+        </div>
+    </div>
+
+    <div class="row">
+
+        
+        @if (userRole == "Administrador")
+        {
+            <div class="col-md-4">
+                <a href="@Url.Action("MostrarUsuarios", "Usuario")" class="btn btn-primary btn-lg">
+                    <i class="bi bi-list"></i> Listar Usuarios
+                </a>
+            </div>
+        }
+
+        @if (userRole == "Administrador")
+        {
+            <div class="col-md-4 text-center">
+                <a href="@Url.Action("AltaUsuario", "Usuario")" class="btn btn-success btn-lg">
+                    <i class="bi bi-person-plus"></i> Agregar Usuarios
+                </a>
+            </div>
+        }
+
+        <!-- Botón para cerrar sesión -->
+        <div class="col-md-4 text-end">
+            <form asp-action="Logout" asp-controller="Usuario" method="post">
+                <button type="submit" class="btn btn-danger btn-lg">
+                    <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

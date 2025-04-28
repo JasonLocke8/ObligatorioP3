@@ -1,7 +1,10 @@
 ﻿using Libreria.DTOs.DTOs.DTOsUsuario;
+using Libreria.LogicaAplicacion.InterfacesCasosUso.ICUAutenticacion;
 using Libreria.LogicaAplicacion.InterfacesCasosUso.ICUUsuario;
 using Libreria.LogicaNegocio.CustomExceptions.UsuarioExceptions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ObligatorioP3.Filters;
 using System.Collections.Generic;
 
 namespace ObligatorioP3.Controllers
@@ -13,27 +16,31 @@ namespace ObligatorioP3.Controllers
         private ICUListarUsuario _cuListarUsuario;
         private ICUEditarUsuario _cuEditarUsuario;
         private ICUEliminarUsuario _cuEliminarUsuario;
+        private ICULogin _cuLogin;
 
-        public UsuarioController(ICUAltaUsuario cuAltaUsuario, ICUListarUsuario cuListarUsuario, ICUEditarUsuario cuEditarUsuario, ICUEliminarUsuario cuEliminarUsuario)
+        public UsuarioController(ICULogin cuLogin, ICUAltaUsuario cuAltaUsuario, ICUListarUsuario cuListarUsuario, ICUEditarUsuario cuEditarUsuario, ICUEliminarUsuario cuEliminarUsuario)
         {
             _cuAltaUsuario = cuAltaUsuario;
             _cuListarUsuario = cuListarUsuario;
             _cuEditarUsuario = cuEditarUsuario;
             _cuEliminarUsuario = cuEliminarUsuario;
+            _cuLogin = cuLogin;
 
         }
 
-
+        [FuncionarioAuthorize]
         public IActionResult Index()
         {
             return View();
         }
 
+        [AdminAuthorize]
         public IActionResult AltaUsuario()
         {
             return View();
         }
-
+        
+        [AdminAuthorize]
         [HttpPost]
         public IActionResult AltaUsuario(DTOUsuario dtoUsuario)
         {
@@ -77,6 +84,7 @@ namespace ObligatorioP3.Controllers
             return View();
         }
 
+        [AdminAuthorize]
         public IActionResult MostrarUsuarios()
         {
             try
@@ -91,6 +99,7 @@ namespace ObligatorioP3.Controllers
             }
         }
 
+        [AdminAuthorize]
         public IActionResult ModificarUsuario(int id)
         {
             try
@@ -106,7 +115,7 @@ namespace ObligatorioP3.Controllers
         }
 
         [HttpPost]
-
+        [AdminAuthorize]
         public IActionResult ModificarUsuario(DTOUsuario dtoUsuario)
         {
             try
@@ -114,7 +123,7 @@ namespace ObligatorioP3.Controllers
 
                 _cuEditarUsuario.EditarUsuario(dtoUsuario);
                 ViewBag.Mensaje = "Usuario modificado correctamente";
-                
+
             }
             catch (Exception e)
             {
@@ -125,6 +134,7 @@ namespace ObligatorioP3.Controllers
         }
 
         [HttpPost]
+        [AdminAuthorize]
         public IActionResult EliminarUsuario(int id)
         {
             try
@@ -137,6 +147,45 @@ namespace ObligatorioP3.Controllers
                 TempData["Error"] = e.Message;
             }
             return RedirectToAction("MostrarUsuarios");
+        }
+
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Login(DTOUsuario dtoUsuario)
+        {
+            try
+            {
+                HttpContext.Session.Clear();
+
+                DTOUsuario u = _cuLogin.ValidarLogin(dtoUsuario);
+
+                if (u.Rol == "Cliente")
+                {
+                    ViewBag.Mensaje = "Acceso denegado para clientes.";
+                    return View();
+                }
+
+                HttpContext.Session.SetInt32("LogueadoID", (int)u.Id);
+                HttpContext.Session.SetString("LogueadoRol", u.Rol);
+
+                return RedirectToAction("Index", "Usuario");
+            }
+            catch (Exception e)
+            {
+                ViewBag.Mensaje = e.Message;
+                return View();
+            }
+        }
+
+        [HttpPost]
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Index", "Home");
         }
     }
 }

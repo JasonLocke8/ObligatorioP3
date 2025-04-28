@@ -1,0 +1,13 @@
+﻿@{  
+  ViewData["Title"] = "Acceso Denegado";  
+  var userRole = Context.Session.GetString("LogueadoRol");  
+  var redirectController = (userRole == "Funcionario" || userRole == "Administrador") ? "Usuario" : "Home";  
+}  
+
+<div class="d-flex justify-content-center align-items-center vh-100">  
+ <div class="text-center">  
+   <h1 class="text-danger">Acceso Denegado</h1>  
+   <p>No tienes permisos para acceder a esta sección.</p>  
+   <a asp-controller="@redirectController" asp-action="Index" class="btn btn-primary">Volver al inicio</a>  
+ </div>  
+</div>
