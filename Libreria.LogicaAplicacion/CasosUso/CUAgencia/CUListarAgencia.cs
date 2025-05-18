@@ -34,7 +34,7 @@ namespace Libreria.LogicaAplicacion.CasosUso.CUAgencia
             Agencia agencia = _repositorioAgencia.FindById(id);
             if (agencia == null)
             {
-                throw new AgenciaNoExiste("Agencia no encontrada");
+                throw new AgenciaNoExisteException("Agencia no encontrada");
             }
             else
             {

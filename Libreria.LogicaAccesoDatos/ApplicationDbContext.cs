@@ -56,11 +56,12 @@ namespace Libreria.LogicaAccesoDatos
                 .Property(e => e.Peso)
                 .HasPrecision(18, 2);
 
+            modelBuilder.Entity<Envio>()
+                .HasDiscriminator<string>("TipoEnvio")
+                .HasValue<EnvioComun>("EnvioComun")
+                .HasValue<EnvioUrgente>("EnvioUrgente");
 
         }
-
-
-
 
     }
 }

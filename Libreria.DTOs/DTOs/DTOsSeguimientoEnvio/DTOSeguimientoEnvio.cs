@@ -9,15 +9,16 @@ namespace Libreria.DTOs.DTOs.DTOsSeguimientoEnvio
     public class DTOSeguimientoEnvio
     {
         public int Id { get; set; }
+        public int EnvioId { get; set; }
         public DateTime Fecha { get; set; }
-        public string Ubicacion { get; set; }
-        public string Observaciones { get; set; }
-        public DTOSeguimientoEnvio(int id, DateTime fecha, string ubicacion, string observaciones)
+        public string Comentario { get; set; }
+        public int IdEmpleado { get; set; }
+        public DTOSeguimientoEnvio(int envioId, string comentario, int idEmpleado)
         {
-            Id = id;
-            Fecha = fecha;
-            Ubicacion = ubicacion;
-            Observaciones = observaciones;
+            EnvioId = envioId;
+            Fecha = DateTime.Now;
+            Comentario = comentario;
+            IdEmpleado = idEmpleado;
         }
         public DTOSeguimientoEnvio()
         {

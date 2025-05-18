@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Libreria.LogicaNegocio.CustomExceptions.UsuarioExceptions
 {
-    public class UsuarioExiste : Exception
+    internal class NoLogeadoException : Exception
     {
-        public UsuarioExiste(string message) : base(message)
+        public NoLogeadoException(string message) : base(message)
         {
         }
+
     }
 }
-

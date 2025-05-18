@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Libreria.LogicaNegocio.CustomExceptions.UsuarioExceptions
 {
-    public class RolNoValido : Exception
+    public class RolNoValidoException : Exception
     {
-        public RolNoValido(string message) : base(message)
+        public RolNoValidoException(string message) : base(message)
         {
         }
 

@@ -50,10 +50,5 @@ namespace Libreria.LogicaAccesoDatos.Repositorios
             return _context.SeguimientosEnvios.Where(s => s.Envio.Id == id).ToList();
 
         }
-
-
-
-
-
     }
 }

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Libreria.LogicaAccesoDatos.Migrations
 {
     /// <inheritdoc />
-    public partial class m1 : Migration
+    public partial class obli : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -35,11 +35,12 @@ namespace Libreria.LogicaAccesoDatos.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UsuarioId = table.Column<int>(type: "int", nullable: false),
-                    FechaAccion = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    TipoAccion = table.Column<int>(type: "int", nullable: false),
-                    EntidadId = table.Column<int>(type: "int", nullable: false),
-                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    UsuarioId = table.Column<int>(type: "int", nullable: true),
+                    Accion = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Entidad = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EntidadId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Observaciones = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Fecha = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -56,7 +57,8 @@ namespace Libreria.LogicaAccesoDatos.Migrations
                     Apellido = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Rol = table.Column<int>(type: "int", nullable: false)
+                    Rol = table.Column<int>(type: "int", nullable: false),
+                    Eliminado = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -69,14 +71,14 @@ namespace Libreria.LogicaAccesoDatos.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    NroTracking = table.Column<int>(type: "int", nullable: false),
+                    NroTracking = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     EmpleadoId = table.Column<int>(type: "int", nullable: false),
                     ClienteId = table.Column<int>(type: "int", nullable: false),
                     Peso = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
                     Estado = table.Column<int>(type: "int", nullable: false),
                     FechaCreacion = table.Column<DateTime>(type: "datetime2", nullable: false),
                     FechaEntrega = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Discriminator = table.Column<string>(type: "nvarchar(13)", maxLength: 13, nullable: false),
+                    TipoEnvio = table.Column<string>(type: "nvarchar(13)", maxLength: 13, nullable: false),
                     AgenciaDestinoId = table.Column<int>(type: "int", nullable: true),
                     Calle = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     NroPuerta = table.Column<int>(type: "int", nullable: true),

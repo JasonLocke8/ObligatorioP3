@@ -6,62 +6,84 @@
     var userRole = Context.Session.GetString("LogueadoRol");
 }
 
-<h1>Lista de Usuarios</h1>
-
-@if (TempData["Mensaje"] != null)
-{
-    <div class="alert alert-success">
-        @TempData["Mensaje"]
-    </div>
-}
-
-@if (TempData["Error"] != null)
-{
-    <div class="alert alert-danger">
-        @TempData["Error"]
-    </div>
-}
-
-@if (Model == null || !Model.Any())
-{
-    <p>No hay usuarios para mostrar.</p>
-}
-else
-{
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <th>Email</th>
-                <th>Rol</th>
-                @if (userRole == "Administrador")
-                {
-                    <th>Acciones</th>
-                }
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var usuario in Model)
-            {
-                <tr>
-                    <td>@usuario.Nombre</td>
-                    <td>@usuario.Apellido</td>
-                    <td>@usuario.Email</td>
-                    <td>@usuario.Rol</td>
-                    @if (userRole == "Administrador")
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                    <h2 class="mb-0">Lista de Usuarios</h2>
+                    <a asp-action="Index" class="btn btn-light btn-sm">Volver</a>
+                </div>
+                <div class="card-body">
+                    @if (TempData["Mensaje"] != null)
                     {
-                        <td>
-                            <a asp-action="ModificarUsuario" asp-route-id="@usuario.Id" class="btn btn-primary btn-sm">Editar</a>
-                            <form asp-action="EliminarUsuario" asp-route-id="@usuario.Id" method="post" style="display:inline;">
-                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de que deseas eliminar este usuario?');">Eliminar</button>
-                            </form>
-                        </td>
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            @TempData["Mensaje"]
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
                     }
-                </tr>
-            }
-        </tbody>
-    </table>
 
-    <a asp-action="Index" class="btn btn-secondary">Volver</a>
-}
+                    @if (TempData["Error"] != null)
+                    {
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            @TempData["Error"]
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    }
+
+                    @if (Model == null || !Model.Any())
+                    {
+                        <div class="alert alert-info text-center">
+                            No hay usuarios para mostrar.
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle">
+                                <thead class="table-primary">
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Apellido</th>
+                                        <th>Email</th>
+                                        <th>Rol</th>
+                                        @if (userRole == "Administrador")
+                                        {
+                                            <th>Acciones</th>
+                                        }
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var usuario in Model)
+                                    {
+                                        <tr>
+                                            <td>@usuario.Nombre</td>
+                                            <td>@usuario.Apellido</td>
+                                            <td>@usuario.Email</td>
+                                            <td>
+                                                <span class="badge bg-secondary">@usuario.Rol</span>
+                                            </td>
+                                            @if (userRole == "Administrador")
+                                            {
+                                                <td>
+                                                    <a asp-action="ModificarUsuario" asp-route-id="@usuario.Id" class="btn btn-outline-primary btn-sm me-1">
+                                                        <i class="bi bi-pencil-square"></i> Editar
+                                                    </a>
+                                                    <form asp-action="EliminarUsuario" asp-route-id="@usuario.Id" method="post" style="display:inline;">
+                                                        <button type="submit" class="btn btn-outline-danger btn-sm" onclick="return confirm('¿Estás seguro de que deseas eliminar este usuario? Se eliminaran todos los eventos a los que esté vinculado.');">
+                                                            <i class="bi bi-trash"></i> Eliminar
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                            }
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

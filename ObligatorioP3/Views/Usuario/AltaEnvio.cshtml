@@ -1,0 +1,91 @@
+﻿@model ObligatorioP3.Models.AltaEnvioViewModel
+
+@{
+    ViewData["Title"] = "Alta Envio";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-7">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0">Crear Envío</h3>
+                </div>
+                <div class="card-body">
+                    <form asp-action="AltaEnvio" autocomplete="off">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                        <div class="mb-3">
+                            <label class="form-label">Cliente</label>
+                            <select asp-for="dtoAltaEnvio.ClienteId" asp-items="Model.Clientes" class="form-control">
+                                <option value="">Seleccione un cliente</option>
+                            </select>
+                            <span asp-validation-for="dtoAltaEnvio.ClienteId" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Peso (en kg)</label>
+                            <input asp-for="dtoAltaEnvio.Peso" class="form-control" />
+                            <span asp-validation-for="dtoAltaEnvio.Peso" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Tipo de Envío</label>
+                            <select asp-for="dtoAltaEnvio.TipoEnvio" class="form-control" onchange="toggleFields()">
+                                <option value="">Seleccione una opción</option>
+                                <option value="comun">Envio Comun</option>
+                                <option value="urgente">Envio Urgente</option>
+                            </select>
+                            <span asp-validation-for="dtoAltaEnvio.TipoEnvio" class="text-danger"></span>
+                        </div>
+                        <div id="comunFields" style="display: none;">
+                            <div class="mb-3">
+                                <label class="form-label">Agencia Destino</label>
+                                <select asp-for="dtoAltaEnvio.AgenciaDestinoId" asp-items="Model.Agencias" class="form-control">
+                                    <option value="">Seleccione una agencia</option>
+                                </select>
+                                <span asp-validation-for="dtoAltaEnvio.AgenciaDestinoId" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div id="urgenteFields" style="display: none;">
+                            <div class="mb-3">
+                                <label class="form-label">Calle</label>
+                                <input asp-for="dtoAltaEnvio.Calle" class="form-control" />
+                                <span asp-validation-for="dtoAltaEnvio.Calle" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Número de Puerta</label>
+                                <input asp-for="dtoAltaEnvio.NroPuerta" class="form-control" />
+                                <span asp-validation-for="dtoAltaEnvio.NroPuerta" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Departamento</label>
+                                <input asp-for="dtoAltaEnvio.Departamento" class="form-control" />
+                                <span asp-validation-for="dtoAltaEnvio.Departamento" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <a asp-action="Index" class="btn btn-outline-secondary">
+                                <i class="bi bi-arrow-left"></i> Volver
+                            </a>
+                            <button type="submit" class="btn btn-success">
+                                <i class="bi bi-plus-circle"></i> Crear Envío
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function toggleFields() {
+            const tipoEnvio = document.getElementById("dtoAltaEnvio_TipoEnvio").value;
+            document.getElementById("comunFields").style.display = tipoEnvio === "comun" ? "block" : "none";
+            document.getElementById("urgenteFields").style.display = tipoEnvio === "urgente" ? "block" : "none";
+        }
+        document.addEventListener("DOMContentLoaded", function () {
+            toggleFields();
+        });
+    </script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

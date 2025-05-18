@@ -1,6 +1,5 @@
 ﻿using Libreria.LogicaNegocio.CustomExceptions.UsuarioExceptions;
 using Libreria.LogicaNegocio.Enumerados;
-using Libreria.LogicaNegocio.VO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,11 +17,11 @@ namespace Libreria.LogicaNegocio.Entidades
         public string Email { get; set; }
         public string Password { get; set; }
         public RolUsuario Rol { get; set; }
+        public bool Eliminado { get; set; }
 
-        // Constructor
         public Usuario()
         {
-
+            Eliminado = false;
         }
 
         public Usuario(string nombre, string apellido, string email, string password)
@@ -31,6 +30,7 @@ namespace Libreria.LogicaNegocio.Entidades
             Apellido = apellido;
             Email = email;
             Password = password;
+            Eliminado = false;
             Validar();
 
         }
@@ -55,7 +55,7 @@ namespace Libreria.LogicaNegocio.Entidades
             }
             if ((int)Rol < 0 || (int)Rol > 2)
             {
-                throw new RolNoValido("El rol no es válido");
+                throw new RolNoValidoException("El rol no es válido");
             }
 
         }

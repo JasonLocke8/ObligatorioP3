@@ -6,46 +6,84 @@
 
 @if (TempData["Mensaje"] != null)
 {
-    <div class="alert alert-warning">
+    <div class="alert alert-success text-center">
         @TempData["Mensaje"]
     </div>
 }
 
-<div class="container mt-4">
-    <div class="row">
-        <div class="col-md-12">
-            <h1 class="mb-4">Gestión de Usuarios</h1>
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger text-center">
+        @TempData["Error"]
+    </div>
+}
+
+<div class="container mt-5">
+    <div class="row mb-4">
+        <div class="col-12 d-flex justify-content-center">
+            <h1 class="fw-bold text-primary">Dashboard</h1>
         </div>
     </div>
 
-    <div class="row">
+    <div class="row justify-content-center">
+        <div class="col-12 d-flex flex-wrap justify-content-center gap-3">
 
-        
-        @if (userRole == "Administrador")
-        {
-            <div class="col-md-4">
-                <a href="@Url.Action("MostrarUsuarios", "Usuario")" class="btn btn-primary btn-lg">
-                    <i class="bi bi-list"></i> Listar Usuarios
+            @if (userRole == "Administrador")
+            {
+                <a href="@Url.Action("MostrarUsuarios", "Usuario")" class="btn btn-primary btn-square btn-md d-flex flex-column align-items-center justify-content-center">
+                    <i class="bi bi-list fs-3"></i>
+                    <span class="mt-1">Listar Usuarios</span>
                 </a>
-            </div>
-        }
+            }
 
-        @if (userRole == "Administrador")
-        {
-            <div class="col-md-4 text-center">
-                <a href="@Url.Action("AltaUsuario", "Usuario")" class="btn btn-success btn-lg">
-                    <i class="bi bi-person-plus"></i> Agregar Usuarios
+            @if (userRole == "Administrador")
+            {
+                <a href="@Url.Action("AltaUsuario", "Usuario")" class="btn btn-success btn-square btn-md d-flex flex-column align-items-center justify-content-center">
+                    <i class="bi bi-person-plus fs-3"></i>
+                    <span class="mt-1">Agregar Usuarios</span>
                 </a>
-            </div>
-        }
+            }
 
-        <!-- Botón para cerrar sesión -->
-        <div class="col-md-4 text-end">
-            <form asp-action="Logout" asp-controller="Usuario" method="post">
-                <button type="submit" class="btn btn-danger btn-lg">
-                    <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
+            @if (userRole == "Administrador" || userRole == "Funcionario")
+            {
+                <a href="@Url.Action("AltaEnvio", "Usuario")" class="btn btn-info btn-square btn-md d-flex flex-column align-items-center justify-content-center">
+                    <i class="bi bi-box fs-3"></i>
+                    <span class="mt-1">Alta Envío</span>
+                </a>
+            }
+
+            @if (userRole == "Administrador" || userRole == "Funcionario")
+            {
+                <a href="@Url.Action("MostrarEnvios", "Usuario")" class="btn btn-warning btn-square btn-md d-flex flex-column align-items-center justify-content-center">
+                    <i class="bi bi-truck fs-3"></i>
+                    <span class="mt-1">Mostrar Envíos</span>
+                </a>
+            }
+
+            <form asp-action="Logout" asp-controller="Usuario" method="post" class="m-0">
+                <button type="submit" class="btn btn-danger btn-square btn-md d-flex flex-column align-items-center justify-content-center">
+                    <i class="bi bi-box-arrow-right fs-3"></i>
+                    <span class="mt-1">Cerrar Sesión</span>
                 </button>
             </form>
         </div>
     </div>
 </div>
+
+<style>
+    .btn-square {
+        width: 120px;
+        height: 120px;
+        padding: 0;
+        border-radius: 12px !important;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        transition: transform 0.1s;
+    }
+    .btn-square:hover {
+        transform: scale(1.05);
+        z-index: 2;
+    }
+    .btn-md {
+        font-size: 1rem;
+    }
+</style>

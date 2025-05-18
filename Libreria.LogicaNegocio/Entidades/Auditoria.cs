@@ -1,5 +1,4 @@
-﻿using Libreria.LogicaNegocio.Enumerados;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,23 +9,25 @@ namespace Libreria.LogicaNegocio.Entidades
     public class Auditoria
     {
         public int Id { get; set; }
+        public int? UsuarioId { get; set; }
+        public string? Accion { get; set; }
+        public string? Entidad { get; set; }
+        public string? EntidadId { get; set; }
+        public string? Observaciones { get; set; }
+        public DateTime Fecha { get; set; }
 
-        // Quien hizo la accion
-        public int UsuarioId { get; set; }
-        public DateTime FechaAccion { get; set; }
-        public AuditoriaEmpleados TipoAccion { get; set; }
-
-        // Id de la entidad afectada
-        public int EntidadId { get; set; }
-        public string Descripcion { get; set; }
-
-        public Auditoria (int usuarioId, DateTime fechaAccion, AuditoriaEmpleados tipoAccion, int entidadId, string descripcion)
+        public Auditoria()
+        {
+            Fecha = DateTime.Now;
+        }
+        public Auditoria(int? usuarioId, string accion, string entidad, string entidadId, string observaciones)
         {
             UsuarioId = usuarioId;
-            FechaAccion = fechaAccion;
-            TipoAccion = tipoAccion;
+            Accion = accion;
+            Entidad = entidad;
             EntidadId = entidadId;
-            Descripcion = descripcion;
+            Observaciones = observaciones;
+            Fecha = DateTime.Now;
         }
 
     }

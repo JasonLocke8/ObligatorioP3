@@ -1,11 +1,16 @@
-﻿using Libreria.DTOs.DTOs.DTOsUsuario;
+﻿using Libreria.DTOs.DTOs.DTOsAgencia;
+using Libreria.DTOs.DTOs.DTOsEnvio;
+using Libreria.DTOs.DTOs.DTOsUsuario;
+using Libreria.LogicaAplicacion.InterfacesCasosUso.ICUAgencia;
 using Libreria.LogicaAplicacion.InterfacesCasosUso.ICUAutenticacion;
+using Libreria.LogicaAplicacion.InterfacesCasosUso.ICUEnvios;
+using Libreria.LogicaAplicacion.InterfacesCasosUso.ICUSeguimiento;
 using Libreria.LogicaAplicacion.InterfacesCasosUso.ICUUsuario;
 using Libreria.LogicaNegocio.CustomExceptions.UsuarioExceptions;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using ObligatorioP3.Filters;
-using System.Collections.Generic;
+using ObligatorioP3.Models;
 
 namespace ObligatorioP3.Controllers
 {
@@ -16,15 +21,25 @@ namespace ObligatorioP3.Controllers
         private ICUListarUsuario _cuListarUsuario;
         private ICUEditarUsuario _cuEditarUsuario;
         private ICUEliminarUsuario _cuEliminarUsuario;
+        private ICUAltaEnvio _cuAltaEnvio;
+        private ICUListarEnvio _cuListarEnvio;
         private ICULogin _cuLogin;
+        private ICUListarAgencia _cuListarAgencia;
+        private ICUFinalizarEnvio _cuFinalizarEnvio;
+        private ICUAgregarSeguimiento _cuAgregarSeguimiento;
 
-        public UsuarioController(ICULogin cuLogin, ICUAltaUsuario cuAltaUsuario, ICUListarUsuario cuListarUsuario, ICUEditarUsuario cuEditarUsuario, ICUEliminarUsuario cuEliminarUsuario)
+        public UsuarioController(ICUAgregarSeguimiento cuAgregarSeguimiento, ICUFinalizarEnvio cuFinalizarEnvio, ICUListarAgencia cuListarAgencia, ICUListarEnvio cuListarEnvio, ICULogin cuLogin, ICUAltaEnvio cuAltaEnvio, ICUAltaUsuario cuAltaUsuario, ICUListarUsuario cuListarUsuario, ICUEditarUsuario cuEditarUsuario, ICUEliminarUsuario cuEliminarUsuario)
         {
             _cuAltaUsuario = cuAltaUsuario;
             _cuListarUsuario = cuListarUsuario;
             _cuEditarUsuario = cuEditarUsuario;
             _cuEliminarUsuario = cuEliminarUsuario;
             _cuLogin = cuLogin;
+            _cuAltaEnvio = cuAltaEnvio;
+            _cuListarEnvio = cuListarEnvio;
+            _cuListarAgencia = cuListarAgencia;
+            _cuFinalizarEnvio = cuFinalizarEnvio;
+            _cuAgregarSeguimiento = cuAgregarSeguimiento;
 
         }
 
@@ -37,51 +52,80 @@ namespace ObligatorioP3.Controllers
         [AdminAuthorize]
         public IActionResult AltaUsuario()
         {
-            return View();
-        }
-        
-        [AdminAuthorize]
-        [HttpPost]
-        public IActionResult AltaUsuario(DTOUsuario dtoUsuario)
-        {
-
             try
             {
-                _cuAltaUsuario.AltaUsuario(dtoUsuario);
-                ViewBag.Mensaje = "Usuario creado correctamente";
-            }
 
-            catch (ApellidoNoValidoException e)
-            {
-                ViewBag.Mensaje = e.Message;
-            }
-            catch (EmailNoValidoException e)
-            {
-                ViewBag.Mensaje = e.Message;
-            }
-            catch (NombreNoValidoException e)
-            {
-                ViewBag.Mensaje = e.Message;
-            }
-            catch (PasswordNoValidoException e)
-            {
-                ViewBag.Mensaje = e.Message;
-            }
-            catch (RolNoValido e)
-            {
-                ViewBag.Mensaje = e.Message;
-            }
-            catch (UsuarioExiste e)
-            {
-                ViewBag.Mensaje = e.Message;
+                CrearUsuarioViewModel viewModel = new CrearUsuarioViewModel();
+
+                return View(viewModel);
             }
             catch (Exception e)
             {
                 ViewBag.Mensaje = e.Message;
+                return View();
+            }
+        }
+
+        [AdminAuthorize]
+        [HttpPost]
+        public IActionResult AltaUsuario(CrearUsuarioViewModel viewModel)
+        {
+
+            try
+            {
+                viewModel.Usuario.LogueadoId = (int)HttpContext.Session.GetInt32("LogueadoID");
+
+                _cuAltaUsuario.AltaUsuario(viewModel.Usuario);
+
+                TempData["Mensaje"] = "Usuario creado correctamente";
+
+                return RedirectToAction("MostrarUsuarios");
+
             }
 
+            catch (ApellidoNoValidoException e)
+            {
+                TempData["Error"] = e.Message;
 
-            return View();
+                return RedirectToAction("Index");
+            }
+            catch (EmailNoValidoException e)
+            {
+                TempData["Error"] = e.Message;
+
+                return RedirectToAction("Index");
+            }
+            catch (NombreNoValidoException e)
+            {
+                TempData["Error"] = e.Message;
+
+                return RedirectToAction("Index");
+            }
+            catch (PasswordNoValidoException e)
+            {
+                TempData["Error"] = e.Message;
+
+                return RedirectToAction("Index");
+            }
+            catch (RolNoValidoException e)
+            {
+                TempData["Error"] = e.Message;
+
+                return RedirectToAction("Index");
+            }
+            catch (UsuarioExisteException e)
+            {
+                TempData["Error"] = e.Message;
+
+                return RedirectToAction("Index");
+            }
+            catch (Exception e)
+            {
+                TempData["Error"] = e.Message;
+
+                return RedirectToAction("Index");
+            }
+
         }
 
         [AdminAuthorize]
@@ -104,8 +148,12 @@ namespace ObligatorioP3.Controllers
         {
             try
             {
-                DTOUsuario usuario = _cuListarUsuario.ListarUsuarioPorId(id);
-                return View(usuario);
+
+                ModificarUsuarioViewModel viewModel = new ModificarUsuarioViewModel();
+
+                viewModel.Usuario = _cuListarUsuario.ListarUsuarioPorId(id);
+
+                return View(viewModel);
             }
             catch (Exception e)
             {
@@ -116,18 +164,23 @@ namespace ObligatorioP3.Controllers
 
         [HttpPost]
         [AdminAuthorize]
-        public IActionResult ModificarUsuario(DTOUsuario dtoUsuario)
+        public IActionResult ModificarUsuario(ModificarUsuarioViewModel viewModel)
         {
             try
             {
+                viewModel.Usuario.LogueadoId = (int)HttpContext.Session.GetInt32("LogueadoID");
 
-                _cuEditarUsuario.EditarUsuario(dtoUsuario);
-                ViewBag.Mensaje = "Usuario modificado correctamente";
+                _cuEditarUsuario.EditarUsuario(viewModel.Usuario);
+
+                TempData["Mensaje"] = "Usuario modificado correctamente";
+
+                return RedirectToAction("MostrarUsuarios");
 
             }
             catch (Exception e)
             {
-                ViewBag.Mensaje = e.Message;
+                TempData["Error"] = e.Message;
+                return RedirectToAction("Index");
             }
             return View();
 
@@ -139,7 +192,8 @@ namespace ObligatorioP3.Controllers
         {
             try
             {
-                _cuEliminarUsuario.EliminarUsuario(id);
+                int logueadoId = (int)HttpContext.Session.GetInt32("LogueadoID");
+                _cuEliminarUsuario.EliminarUsuario(id, logueadoId);
                 TempData["Mensaje"] = "Usuario eliminado correctamente.";
             }
             catch (Exception e)
@@ -187,5 +241,127 @@ namespace ObligatorioP3.Controllers
             HttpContext.Session.Clear();
             return RedirectToAction("Index", "Home");
         }
+
+        [FuncionarioAuthorize]
+        public IActionResult AltaEnvio()
+        {
+            List<DTOUsuario> clientes = _cuListarUsuario.ListarUsuario();
+            List<DTOAgencia> agencias = _cuListarAgencia.ListarAgencia();
+
+            AltaEnvioViewModel viewModel = new AltaEnvioViewModel();
+
+            foreach (DTOUsuario cli in clientes)
+            {
+                SelectListItem sitem = new SelectListItem();
+                sitem.Text = cli.Email;
+                sitem.Value = cli.Id.ToString();
+                viewModel.Clientes.Add(sitem);
+            }
+
+            foreach (DTOAgencia ag in agencias)
+            {
+                SelectListItem sitem = new SelectListItem();
+                sitem.Text = ag.Nombre;
+                sitem.Value = ag.Id.ToString();
+                viewModel.Agencias.Add(sitem);
+            }
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [FuncionarioAuthorize]
+        public IActionResult AltaEnvio(AltaEnvioViewModel viewModel)
+        {
+            try
+            {
+                viewModel.dtoAltaEnvio.LogueadoId = HttpContext.Session.GetInt32("LogueadoID");
+
+                _cuAltaEnvio.AltaEnvio(viewModel.dtoAltaEnvio);
+                TempData["Mensaje"] = "Envío creado correctamente";
+                return RedirectToAction("MostrarEnvios");
+            }
+            catch (Exception e)
+            {
+                TempData["Error"] = e.Message;
+                return RedirectToAction("Index");
+            }
+        }
+
+        [FuncionarioAuthorize]
+        public IActionResult MostrarEnvios()
+        {
+            try
+            {
+                List<DTOEnvio> envios = _cuListarEnvio.ListarEnvios();
+                return View(envios);
+            }
+            catch (Exception e)
+            {
+                ViewBag.Mensaje = e.Message;
+                return View();
+            }
+        }
+
+        [HttpPost]
+        [FuncionarioAuthorize]
+        public IActionResult FinalizarEnvio(int id)
+        {
+            try
+            {
+                int logueadoId = (int)HttpContext.Session.GetInt32("LogueadoID");
+                _cuFinalizarEnvio.FinalizarEnvio(id, logueadoId);
+                TempData["Mensaje"] = "Envio finalizado correctamente.";
+            }
+            catch (Exception e)
+            {
+                TempData["Error"] = e.Message;
+            }
+            return RedirectToAction("MostrarEnvios");
+        }
+
+
+        [FuncionarioAuthorize]
+        public IActionResult NuevoSeguimiento(int id)
+        {
+            try
+            {
+
+                NuevoSeguimientoViewModel viewModel = new NuevoSeguimientoViewModel();
+
+                viewModel.Envio = _cuListarEnvio.ListarEnvioPorId(id);
+
+                return View(viewModel);
+            }
+            catch (Exception e)
+            {
+                ViewBag.Mensaje = e.Message;
+                return View();
+            }
+        }
+
+        [HttpPost]
+        [FuncionarioAuthorize]
+        public IActionResult NuevoSeguimiento(NuevoSeguimientoViewModel viewModel)
+        {
+            try
+            {
+
+                viewModel.Seguimiento.IdEmpleado = (int)HttpContext.Session.GetInt32("LogueadoID");
+                viewModel.Seguimiento.EnvioId = viewModel.Envio.Id;
+
+                _cuAgregarSeguimiento.AgregarSeguimiento(viewModel.Seguimiento);
+
+                TempData["Mensaje"] = "Seguimiento creado correctamente";
+
+                return RedirectToAction("MostrarEnvios");
+            }
+            catch (Exception e)
+            {
+                TempData["Error"] = e.Message;
+                return RedirectToAction("MostrarEnvios");
+            }
+        }
+
     }
 }

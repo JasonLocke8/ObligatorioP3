@@ -26,7 +26,7 @@ namespace Libreria.LogicaAplicacion.CasosUso.CUAgencia
             // Verificar si la agencia existe
             if (!_repositorioAgencia.ExisteAgencia(dtoAgencia.Id))
             {
-                throw new AgenciaNoExiste("La agencia no existe.");
+                throw new AgenciaNoExisteException("La agencia no existe.");
             }
 
             // Traigo la agencia
@@ -38,6 +38,7 @@ namespace Libreria.LogicaAplicacion.CasosUso.CUAgencia
                 dtoAgencia.NroPuerta,
                 dtoAgencia.Departamento
                 );
+            agenciaExistente.Direccion.Validar();
             agenciaExistente.Coordenadas = new Coordenadas(
                 dtoAgencia.Latitud,
                 dtoAgencia.Longitud

@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace Libreria.LogicaNegocio.CustomExceptions.EnvioExceptions
 {
-    public class SinFechaDeEntrega : Exception
+    public class SinFechaEntregaException : Exception
     {
-        public SinFechaDeEntrega(string message) : base(message)
+        public SinFechaEntregaException(string message) : base(message)
         {
         }
-
     }
 }

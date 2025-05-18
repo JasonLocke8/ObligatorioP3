@@ -1,59 +1,60 @@
-﻿@model Libreria.DTOs.DTOs.DTOsUsuario.DTOUsuario
+﻿@model ObligatorioP3.Models.CrearUsuarioViewModel
 
 @{
-    ViewData["Title"] = "AltaUsuario";
+    ViewData["Title"] = "Alta Usuario";
 }
 
-<h1>AltaUsuario</h1>
-
-@if (ViewBag.Mensaje != null)
-{
-    <div class="alert alert-info">
-        @ViewBag.Mensaje
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-7">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0">Crear Usuario</h3>
+                </div>
+                <div class="card-body">
+                    <form asp-action="AltaUsuario" autocomplete="off">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                        <div class="mb-3">
+                            <label asp-for="Usuario.Nombre" class="form-label"></label>
+                            <input asp-for="Usuario.Nombre" class="form-control" />
+                            <span asp-validation-for="Usuario.Nombre" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Usuario.Apellido" class="form-label"></label>
+                            <input asp-for="Usuario.Apellido" class="form-control" />
+                            <span asp-validation-for="Usuario.Apellido" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Usuario.Email" class="form-label"></label>
+                            <input asp-for="Usuario.Email" class="form-control" />
+                            <span asp-validation-for="Usuario.Email" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Usuario.Password" class="form-label"></label>
+                            <input asp-for="Usuario.Password" type="password" class="form-control" required />
+                            <span asp-validation-for="Usuario.Password" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Usuario.Rol" class="form-label"></label>
+                            <select asp-for="Usuario.Rol" class="form-control" asp-items="Model.Roles" required>
+                                <option value="">Seleccione un rol</option>
+                            </select>
+                            <span asp-validation-for="Usuario.Rol" class="text-danger"></span>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <a asp-action="Index" class="btn btn-outline-secondary">
+                                <i class="bi bi-arrow-left"></i> Volver
+                            </a>
+                            <button type="submit" class="btn btn-success">
+                                <i class="bi bi-plus-circle"></i> Crear Usuario
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-}
-
-<h4>DTOUsuario</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="AltaUsuario">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            
-            <div class="form-group">
-                <label asp-for="Nombre" class="control-label"></label>
-                <input asp-for="Nombre" class="form-control" />
-                <span asp-validation-for="Nombre" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Apellido" class="control-label"></label>
-                <input asp-for="Apellido" class="form-control" />
-                <span asp-validation-for="Apellido" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" type="password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Rol" class="control-label"></label>
-                <input asp-for="Rol" class="form-control" />
-                <span asp-validation-for="Rol" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-
-
 </div>
-    <a asp-action="Index" class="btn btn-secondary">Volver</a>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
