@@ -1,12 +1,17 @@
 # 📦 Obligatorio Programación 3 — *por Nicolás González*
 
+## 🧪 Estado del Proyecto
+
+**Estado:** ✅ *Completado*
+
 ## 📌 Descripción del Proyecto
 
-**ObligatorioP3** es una aplicación web desarrollada como parte de un proyecto académico (por ahora, sin finalizar). Su propósito principal es **gestionar usuarios y envíos**, permitiendo realizar operaciones como:
+**ObligatorioP3** es una aplicación web desarrollada como parte de un proyecto académico (**actualmente completado**). Su objetivo principal es **gestionar usuarios, agencias y envíos**, permitiendo realizar las siguientes operaciones:
 
-- 🧑‍💼 Alta, edición, eliminación y listado de usuarios.
-- 📦 Seguimiento y administración de envíos (comunes y urgentes).
-- ✅ Validación de datos y manejo de excepciones personalizadas.
+- 🧑‍💼 Alta, edición, eliminación y listado de usuarios con control de roles y acceso.
+- 🏢 Gestión completa de agencias: alta, modificación, eliminación y consulta.
+- 📦 Administración y seguimiento de envíos (tanto comunes como urgentes), incluyendo generación de tracking y registro de estados.
+- ✅ Validación exhaustiva de datos y manejo de excepciones personalizadas para garantizar la integridad y seguridad de la información.
 
 ---
 
@@ -23,21 +28,102 @@
 
 ## 🚀 Ejemplos de Uso
 
-### 👤 Gestión de Usuarios
+# 👤 Gestión de Usuarios
 
-1. **Alta de Usuario:**
-   - Completa el formulario con los datos requeridos.
-   - Presiona **"Crear"** para agregar el nuevo usuario.
+## 1. Alta de Usuario
 
-2. **Listado de Usuarios:**
-   - Visualiza todos los usuarios registrados.
-   - Podés editar o eliminar usuarios desde la misma lista.
+* Accede como Administrador a la sección "Agregar Usuarios".
+* Completa el formulario con los datos requeridos (nombre, apellido, email, contraseña).
+* Selecciona el rol del usuario (Administrador, Funcionario o Cliente).
+* Presiona "Crear" para agregar el nuevo usuario.
+* Recibirás una confirmación cuando el usuario sea creado.
 
-3. **Eliminación de Usuario:**
-   - Presiona el botón **"Eliminar"**.
-   - La lista se actualiza automáticamente.
+## 2. Listado de Usuarios
 
-(proximamente más funcionalidades)
+* Accede como Administrador a "Listar Usuarios".
+* Visualiza todos los usuarios activos del sistema.
+* La tabla muestra nombre, apellido, email y rol de cada usuario.
+* Los usuarios eliminados no aparecen en este listado.
+
+## 3. Modificación de Usuario
+
+* Desde el listado de usuarios, haz clic en "Editar" junto al usuario deseado.
+* Actualiza los campos necesarios.
+* Presiona "Guardar" para confirmar los cambios.
+* Recibirás una confirmación cuando los cambios sean guardados.
+
+## 4. Eliminación de Usuario
+
+* Desde el listado de usuarios, presiona el botón "Eliminar" junto al usuario.
+* Confirma la acción en el cuadro de diálogo.
+* El usuario será marcado como eliminado y desaparecerá de la lista.
+
+# 📦 Gestión de Envíos
+
+## 1. Alta de Envío
+
+* Accede como Administrador o Funcionario a "Alta Envío".
+* Selecciona el cliente desde el menú desplegable.
+* Elige el tipo de envío (Común o Urgente).
+* Para envíos comunes: selecciona la agencia de destino.
+* Para envíos urgentes: ingresa la dirección de entrega.
+* Especifica el peso del paquete.
+* Presiona "Crear" para registrar el envío.
+* El sistema generará automáticamente un número de tracking.
+
+## 2. Listado de Envíos
+
+* Accede como Administrador o Funcionario a "Mostrar Envíos".
+* Visualiza todos los envíos registrados en el sistema.
+* La tabla muestra información como cliente, tipo, estado y fechas.
+
+## 3. Finalizar Envío
+
+* Desde el listado de envíos, presiona "Finalizar" junto al envío deseado.
+* El sistema registrará la fecha de entrega automáticamente.
+* El estado del envío cambiará a "Entregado".
+
+## 4. Seguimiento de Envío
+
+* Desde el listado de envíos, presiona "Agregar Seguimiento".
+* Ingresa el comentario sobre el estado actual del envío.
+* Presiona "Guardar" para registrar el nuevo estado.
+* Cada seguimiento queda registrado con la fecha y el empleado que lo realizó.
+
+# 🔒 Autenticación y Seguridad
+
+## 1. Inicio de Sesión
+
+* Accede a la página de login.
+* Ingresa tu email y contraseña.
+* Solo podrán acceder empleados (Administradores y Funcionarios).
+* Los clientes no tienen acceso al sistema de gestión.
+
+## 2. Cierre de Sesión
+
+* Presiona el botón "Cerrar Sesión" en el dashboard.
+* Serás redirigido a la página principal.
+
+## 3. Control de Acceso
+
+* Los Administradores tienen acceso a todas las funcionalidades.
+* Los Funcionarios pueden gestionar envíos pero no usuarios.
+* Todas las acciones son auditadas con fecha y usuario.
+
+# 🏢 Gestión de Agencias
+
+## 1. Consulta de Agencias
+
+* Las agencias están disponibles para selección en el alta de envíos comunes.
+* Cada agencia tiene una dirección y coordenadas geográficas asociadas.
+
+# 📊 Reporte y Seguimiento
+
+## 1. Auditoría
+
+* El sistema registra automáticamente todas las acciones importantes.
+* Cada operación de alta, modificación o eliminación queda registrada.
+* Se almacena la fecha, usuario, acción y detalles relevantes.
 
 ---
 
