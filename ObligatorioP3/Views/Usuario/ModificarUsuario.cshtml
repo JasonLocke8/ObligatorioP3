@@ -1,56 +1,58 @@
-﻿@model Libreria.DTOs.DTOs.DTOsUsuario.DTOUsuario
+﻿@model ObligatorioP3.Models.ModificarUsuarioViewModel
 
 @{
-    ViewData["Title"] = "ModificarUsuario";
+    ViewData["Title"] = "Modificar Usuario";
 }
 
-<h1>Modificar Usuario</h1>
-
-@if (ViewBag.Mensaje != null)
-{
-    <div class="alert alert-info">
-        @ViewBag.Mensaje
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-7">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0">Modificar Usuario</h3>
+                </div>
+                <div class="card-body">
+                    
+                    <form asp-action="ModificarUsuario" autocomplete="off">
+                        <input type="hidden" asp-for="Usuario.Id" />
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                        <div class="mb-3">
+                            <label asp-for="Usuario.Nombre" class="form-label"></label>
+                            <input asp-for="Usuario.Nombre" class="form-control" />
+                            <span asp-validation-for="Usuario.Nombre" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Usuario.Apellido" class="form-label"></label>
+                            <input asp-for="Usuario.Apellido" class="form-control" />
+                            <span asp-validation-for="Usuario.Apellido" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Usuario.Email" class="form-label"></label>
+                            <input asp-for="Usuario.Email" class="form-control" />
+                            <span asp-validation-for="Usuario.Email" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Usuario.Rol" class="form-label"></label>
+                            <select asp-for="Usuario.Rol" class="form-select" asp-items="Model.Roles">
+                            </select>
+                            <span asp-validation-for="Usuario.Rol" class="text-danger"></span>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <a asp-controller="Usuario" asp-action="MostrarUsuarios" class="btn btn-outline-secondary">
+                                <i class="bi bi-arrow-left"></i> Volver a la lista
+                            </a>
+                            <button type="submit" class="btn btn-success">
+                                <i class="bi bi-save"></i> Guardar Cambios
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-}
-
-<h4>DTOUsuario</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="ModificarUsuario">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            
-            <div class="form-group">
-                <label asp-for="Nombre" class="control-label"></label>
-                <input asp-for="Nombre" class="form-control" />
-                <span asp-validation-for="Nombre" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Apellido" class="control-label"></label>
-                <input asp-for="Apellido" class="form-control" />
-                <span asp-validation-for="Apellido" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Rol" class="control-label"></label>
-                <input asp-for="Rol" class="form-control" />
-                <span asp-validation-for="Rol" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
-
-<div>
-    <a asp-controller="Usuario" asp-action="MostrarUsuarios">Volver a la lista</a>
 </div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+

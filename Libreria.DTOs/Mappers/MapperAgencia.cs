@@ -1,7 +1,5 @@
 ﻿using Libreria.DTOs.DTOs.DTOsAgencia;
-using Libreria.DTOs.DTOs.DTOsUsuario;
 using Libreria.LogicaNegocio.Entidades;
-using Libreria.LogicaNegocio.Enumerados;
 using Libreria.LogicaNegocio.VO;
 using System;
 using System.Collections.Generic;
@@ -19,6 +17,7 @@ namespace Libreria.DTOs.Mappers
             agencia.Id = dto.Id;
             agencia.Nombre = dto.Nombre;
             agencia.Direccion = new Direccion(dto.Calle, dto.NroPuerta, dto.Departamento);
+            agencia.Direccion.Validar();
             agencia.Coordenadas = new Coordenadas(dto.Latitud, dto.Longitud);
 
             return agencia;

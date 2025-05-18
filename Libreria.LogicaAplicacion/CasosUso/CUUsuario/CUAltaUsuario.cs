@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Libreria.LogicaAplicacion.CasosUso.CUUsuario
@@ -15,25 +16,42 @@ namespace Libreria.LogicaAplicacion.CasosUso.CUUsuario
     public class CUAltaUsuario : ICUAltaUsuario
     {
         private IRepositorioUsuario _repositorioUsuario;
+        private IRepositorioAuditoria _repositorioAuditoria;
 
-        public CUAltaUsuario(IRepositorioUsuario repositorioUsuario)
+        public CUAltaUsuario(IRepositorioUsuario repositorioUsuario, IRepositorioAuditoria repositorioAuditoria)
         {
             _repositorioUsuario = repositorioUsuario;
+            _repositorioAuditoria = repositorioAuditoria;
         }
 
         public void AltaUsuario(DTOUsuario dtoUsuario)
         {
-            // Buscar si el usuario ya existe
 
-            if (_repositorioUsuario.ExisteUsuarioEmail(dtoUsuario.Email))
+            try
             {
-                throw new UsuarioExiste("El usuario ya existe.");
-            }
+                if (_repositorioUsuario.ExisteUsuarioEmail(dtoUsuario.Email))
+                {
+                    throw new UsuarioExisteException("El usuario ya existe.");
+                }
 
-            dtoUsuario.Password = BCrypt.Net.BCrypt.HashPassword(dtoUsuario.Password);
-            Usuario nuevo = MapperUsuario.FromDTOUsuarioToUsuario(dtoUsuario);
-            nuevo.Validar();
-            _repositorioUsuario.Add(nuevo);
+                dtoUsuario.Password = BCrypt.Net.BCrypt.HashPassword(dtoUsuario.Password);
+                Usuario nuevo = MapperUsuario.FromDTOUsuarioToUsuario(dtoUsuario);
+                nuevo.Validar();
+
+                int idNuevo = _repositorioUsuario.Add(nuevo);
+
+                Auditoria aud = new Auditoria(dtoUsuario.LogueadoId, "ALTA", "USUARIO", idNuevo.ToString(), JsonSerializer.Serialize(nuevo));
+                _repositorioAuditoria.Auditar(aud);
+
+            }
+            catch (Exception e)
+            {
+                Auditoria aud = new Auditoria(dtoUsuario.LogueadoId, "ALTA", "USUARIO", null, e.Message);
+                _repositorioAuditoria.Auditar(aud);
+
+                throw e;
+            }
         }
+            
     }
 }

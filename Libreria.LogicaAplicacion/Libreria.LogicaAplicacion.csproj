@@ -13,8 +13,4 @@
     <ProjectReference Include="..\Libreria.Utilidades\Libreria.Utilidades.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="CasosUso\CUEnvios\" />
-  </ItemGroup>
-
 </Project>

@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Libreria.LogicaAplicacion.CasosUso.CUUsuario
@@ -15,39 +16,63 @@ namespace Libreria.LogicaAplicacion.CasosUso.CUUsuario
     public class CUEditarUsuario : ICUEditarUsuario
     {
         private IRepositorioUsuario _repositorioUsuario;
+        private IRepositorioAuditoria _repositorioAuditoria;
 
-        public CUEditarUsuario(IRepositorioUsuario repositorioUsuario)
+        public CUEditarUsuario(IRepositorioUsuario repositorioUsuario, IRepositorioAuditoria repositorioAuditoria)
         {
             _repositorioUsuario = repositorioUsuario;
+            _repositorioAuditoria = repositorioAuditoria;
         }
 
         public void EditarUsuario(DTOUsuario dtoUsuario)
         {
-            // Verificar si el usuario existe
-            if (!_repositorioUsuario.ExisteUsuario(dtoUsuario.Id))
+            try
             {
-                throw new UsuarioNoExiste("El usuario no existe.");
+
+                // Verificar si el usuario existe
+                if (!_repositorioUsuario.ExisteUsuario(dtoUsuario.Id))
+                {
+                    throw new UsuarioNoExisteException("El usuario no existe.");
+                }
+
+                // Traigo el usuario
+                Usuario usuarioExistente = _repositorioUsuario.FindById(dtoUsuario.Id);
+
+                usuarioExistente.Nombre = dtoUsuario.Nombre;
+                usuarioExistente.Apellido = dtoUsuario.Apellido;
+                usuarioExistente.Email = dtoUsuario.Email;
+
+                try
+                {
+                    usuarioExistente.Rol = Enum.Parse<RolUsuario>(dtoUsuario.Rol);
+                }
+                catch (ArgumentException)
+                {
+                    throw new RolNoValidoException("No existe el rol");
+                }
+
+
+                // Agrego la Password
+                if (dtoUsuario.Password != null)
+                {
+                    usuarioExistente.Password = BCrypt.Net.BCrypt.HashPassword(dtoUsuario.Password);
+                }
+
+                usuarioExistente.Validar();
+
+                _repositorioUsuario.Update(usuarioExistente);
+
+                Auditoria aud = new Auditoria(dtoUsuario.LogueadoId, "EDIT", "USUARIO", dtoUsuario.Id.ToString(), JsonSerializer.Serialize(usuarioExistente));
+                _repositorioAuditoria.Auditar(aud);
+
             }
-
-            // Traigo el usuario
-            Usuario usuarioExistente = _repositorioUsuario.FindById(dtoUsuario.Id);
-
-            usuarioExistente.Nombre = dtoUsuario.Nombre;
-            usuarioExistente.Apellido = dtoUsuario.Apellido;
-            usuarioExistente.Email = dtoUsuario.Email;
-            usuarioExistente.Rol = Enum.Parse<RolUsuario>(dtoUsuario.Rol);
-
-
-            // Agrego la Password
-            if (dtoUsuario.Password != null)
+            catch (Exception e)
             {
-                usuarioExistente.Password = BCrypt.Net.BCrypt.HashPassword(dtoUsuario.Password);
+                Auditoria aud = new Auditoria(dtoUsuario.LogueadoId, "EDIT", "USUARIO", null, e.Message);
+                _repositorioAuditoria.Auditar(aud);
+
+                throw e;
             }
-
-            usuarioExistente.Validar();
-
-            _repositorioUsuario.Update(usuarioExistente);
-
         }
     }
 }

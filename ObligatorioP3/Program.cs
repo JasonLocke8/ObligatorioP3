@@ -8,6 +8,10 @@ using Libreria.LogicaNegocio.InterfacesRepositorios;
 using Microsoft.EntityFrameworkCore;
 using Libreria.LogicaAplicacion.CasosUso.CUAutenticacion;
 using Libreria.LogicaAplicacion.InterfacesCasosUso.ICUAutenticacion;
+using Libreria.LogicaAplicacion.InterfacesCasosUso.ICUEnvios;
+using Libreria.LogicaAplicacion.CasosUso.CUEnvios;
+using Libreria.LogicaAplicacion.InterfacesCasosUso.ICUSeguimiento;
+using Libreria.LogicaAplicacion.CasosUso.CUSeguimientoEnvio;
 
 namespace ObligatorioP3
 {
@@ -26,6 +30,7 @@ namespace ObligatorioP3
 
             //DI - REPOS
             builder.Services.AddScoped<IRepositorioAgencia, RepositorioAgencia>();
+            builder.Services.AddScoped<IRepositorioEnvio, RepositorioEnvio>();
             builder.Services.AddScoped<IRepositorioEnvioComun, RepositorioEnvioComun>();
             builder.Services.AddScoped<IRepositorioEnvioUrgente, RepositorioEnvioUrgente>();
             builder.Services.AddScoped<IRepositorioSeguimientoEnvio, RepositorioSeguimientoEnvio>();
@@ -47,6 +52,10 @@ namespace ObligatorioP3
             builder.Services.AddScoped<ICUEliminarAgencia, CUEliminarAgencia>();
 
             // Envios
+            builder.Services.AddScoped<ICUAltaEnvio, CUAltaEnvio>();
+            builder.Services.AddScoped<ICUListarEnvio, CUListarEnvio>();
+            builder.Services.AddScoped<ICUFinalizarEnvio, CUFinalizarEnvio>();
+            builder.Services.AddScoped<ICUAgregarSeguimiento, CUAgregarSeguimiento>();
 
             // Login
             builder.Services.AddScoped<ICULogin, CULogin>();

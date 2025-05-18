@@ -7,12 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="DTOs\DTOsEnvio\" />
-    <Folder Include="DTOs\DTOsEnvioComun\" />
-    <Folder Include="DTOs\DTOsEnvioUrgente\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Libreria.LogicaNegocio\Libreria.LogicaNegocio.csproj" />
   </ItemGroup>
 

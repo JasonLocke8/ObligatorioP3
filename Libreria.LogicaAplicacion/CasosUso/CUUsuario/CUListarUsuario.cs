@@ -36,7 +36,7 @@ namespace Libreria.LogicaAplicacion.CasosUso.CUUsuario
             Usuario usuario = _repositorioUsuario.FindById(id);
             if (usuario == null)
             {
-                throw new UsuarioNoExiste("Usuario no encontrado");
+                throw new UsuarioNoExisteException("Usuario no encontrado");
             }
             else
             {

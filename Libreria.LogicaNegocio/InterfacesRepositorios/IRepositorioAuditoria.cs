@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Libreria.LogicaNegocio.InterfacesRepositorios
 {
-    public interface IRepositorioAuditoria : IRepositorio<Auditoria>
+    public interface IRepositorioAuditoria
     {
-
+        void Auditar(Auditoria nueva);
 
     }
 }

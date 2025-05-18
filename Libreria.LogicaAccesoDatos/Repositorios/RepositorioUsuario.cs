@@ -24,7 +24,7 @@ namespace Libreria.LogicaAccesoDatos.Repositorios
         }
         public Usuario FindById(int id)
         {
-            return _context.Usuarios.Find(id);
+            return _context.Usuarios.FirstOrDefault(u => u.Id == id && !u.Eliminado);
         }
         public void Remove(int id)
         {
@@ -37,7 +37,7 @@ namespace Libreria.LogicaAccesoDatos.Repositorios
         }
         public List<Usuario> FindAll()
         {
-            return _context.Usuarios.ToList();
+            return _context.Usuarios.Where(u => !u.Eliminado).ToList();
         }
         public void Update(Usuario obj)
         {
@@ -46,15 +46,12 @@ namespace Libreria.LogicaAccesoDatos.Repositorios
         }
         public Usuario FindByEmail(string email)
         {
-            return _context.Usuarios.FirstOrDefault(u => u.Email == email);
+            return _context.Usuarios.FirstOrDefault(u => u.Email == email && !u.Eliminado);
 
         }
         public List<Usuario> FindByTipoUsuario(int rol)
         {
-            // Convertir el entero a RolUsuario
-            RolUsuario rolUsuario = (RolUsuario)rol;
-
-            return _context.Usuarios.Where(u => u.Rol == rolUsuario).ToList();
+            return _context.Usuarios.Where(u => u.Rol == (RolUsuario)rol && !u.Eliminado).ToList();
         }
         public bool ExisteUsuario(int id)
         {

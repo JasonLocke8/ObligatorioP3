@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Libreria.LogicaNegocio.CustomExceptions.AgenciaExceptions
 {
-    public class AgenciaExiste : Exception
+    public class AgenciaNoExisteException : Exception
     {
-        public AgenciaExiste(string message) : base(message)
+        public AgenciaNoExisteException(string message) : base(message)
         {
         }
     }

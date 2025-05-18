@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Libreria.LogicaNegocio.CustomExceptions.UsuarioExceptions
 {
-    public class UsuarioNoExiste : Exception
+    public class UsuarioExisteException : Exception
     {
-        public UsuarioNoExiste(string message) : base(message)
+        public UsuarioExisteException(string message) : base(message)
         {
         }
     }

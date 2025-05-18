@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace Libreria.LogicaNegocio.CustomExceptions.AgenciaExceptions
 {
-    public class AgenciaNoExiste : Exception
+    public class SinAgenciaException : Exception
     {
-        public AgenciaNoExiste(string message) : base(message)
+        public SinAgenciaException(string message) : base(message)
         {
         }
+
     }
 }

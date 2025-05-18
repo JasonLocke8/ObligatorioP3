@@ -1,11 +1,12 @@
 ﻿using Libreria.LogicaAplicacion.InterfacesCasosUso.ICUUsuario;
-using Libreria.LogicaNegocio.CustomExceptions.SharedExceptions;
 using Libreria.LogicaNegocio.CustomExceptions.UsuarioExceptions;
+using Libreria.LogicaNegocio.Entidades;
 using Libreria.LogicaNegocio.InterfacesRepositorios;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Libreria.LogicaAplicacion.CasosUso.CUUsuario
@@ -13,26 +14,43 @@ namespace Libreria.LogicaAplicacion.CasosUso.CUUsuario
     public class CUEliminarUsuario : ICUEliminarUsuario
     {
         private IRepositorioUsuario _repositorioUsuario;
+        private IRepositorioEnvio _repositorioEnvio;
+        private IRepositorioAuditoria _repositorioAuditoria;
 
-        public CUEliminarUsuario(IRepositorioUsuario repositorioUsuario)
+        public CUEliminarUsuario(IRepositorioUsuario repositorioUsuario, IRepositorioEnvio repositorioEnvio, IRepositorioAuditoria repositorioAuditoria)
         {
             _repositorioUsuario = repositorioUsuario;
+            _repositorioEnvio = repositorioEnvio;
+            _repositorioAuditoria = repositorioAuditoria;
         }
-        public void EliminarUsuario(int id)
+        public void EliminarUsuario(int id, int logueadoId)
         {
-
-            if (!_repositorioUsuario.ExisteUsuario(id))
+            try
             {
-                throw new UsuarioNoExiste("El usuario no existe");
+
+                if (!_repositorioUsuario.ExisteUsuario(id))
+                {
+                    throw new UsuarioNoExisteException("El usuario no existe");
+                }
+
+                Usuario usuario = _repositorioUsuario.FindById(id);
+
+                usuario.Eliminado = true;
+                _repositorioUsuario.Update(usuario);
+
+                Auditoria aud = new Auditoria(logueadoId, "DELETE", "USUARIO", usuario.Id.ToString(), JsonSerializer.Serialize(usuario));
+                _repositorioAuditoria.Auditar(aud);
+
+
+            }
+            catch (Exception e)
+            {
+                Auditoria aud = new Auditoria(logueadoId, "DELETE", "USUARIO", null, e.Message);
+                _repositorioAuditoria.Auditar(aud);
+
+                throw e;
             }
 
-            _repositorioUsuario.Remove(id);
-
-            // Verificar si el usuario fue eliminado correctamente
-            if (_repositorioUsuario.ExisteUsuario(id))
-            {
-                throw new NoEliminacion("No se pudo eliminar el usuario");
-            }
 
         }
     }

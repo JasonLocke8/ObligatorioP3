@@ -22,6 +22,7 @@ namespace Libreria.LogicaNegocio.Entidades
 
             direccion.Validar();
             coordenadas.Validar();
+            Validar();
 
         }
 

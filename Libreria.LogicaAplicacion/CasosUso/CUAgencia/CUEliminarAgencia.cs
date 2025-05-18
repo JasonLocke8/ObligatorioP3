@@ -21,7 +21,7 @@ namespace Libreria.LogicaAplicacion.CasosUso.CUAgencia
         {
             if (!_repositorioAgencia.ExisteAgencia(id))
             {
-                throw new AgenciaNoExiste("La agencia no existe");
+                throw new AgenciaNoExisteException("La agencia no existe");
             }
 
             _repositorioAgencia.Remove(id);

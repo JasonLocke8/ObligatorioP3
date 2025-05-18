@@ -20,10 +20,27 @@ namespace Libreria.LogicaNegocio.Entidades
             Comentario = comentario;
             FechaComentario = DateTime.Now;
             ComentarioEmpleado = comentarioEmpleado;
+            Validar();
         }
 
         public SeguimientoEnvio()
         {
+        }
+
+        public void Validar()
+        {
+            if (Envio == null)
+            {
+                throw new Exception("El envío no puede ser nulo.");
+            }
+            if (String.IsNullOrEmpty(Comentario))
+            {
+                throw new Exception("El comentario no puede ser vacío.");
+            }
+            if (ComentarioEmpleado == null)
+            {
+                throw new Exception("El empleado que realizó el comentario no puede ser nulo.");
+            }
         }
     }
 }

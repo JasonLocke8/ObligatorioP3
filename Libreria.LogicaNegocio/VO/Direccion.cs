@@ -19,7 +19,6 @@ namespace Libreria.LogicaNegocio.VO
             Calle = calle;
             NroPuerta = nroPuerta;
             Departamento = departamento;
-            Validar();
         }
 
         public void Validar()

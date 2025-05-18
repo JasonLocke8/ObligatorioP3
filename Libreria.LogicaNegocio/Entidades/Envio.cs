@@ -1,4 +1,5 @@
-﻿using Libreria.LogicaNegocio.Enumerados;
+﻿using Libreria.LogicaNegocio.CustomExceptions.EnvioExceptions;
+using Libreria.LogicaNegocio.Enumerados;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace Libreria.LogicaNegocio.Entidades
     public abstract class Envio
     {
         public int Id { get; set; }
-        public int NroTracking { get; set; }
+        public string NroTracking { get; set; }
         public int EmpleadoId { get; set; }
         public int ClienteId { get; set; }
         public Usuario Empleado { get; set; }
@@ -21,40 +22,60 @@ namespace Libreria.LogicaNegocio.Entidades
         public DateTime? FechaEntrega { get; set; }
         public List<SeguimientoEnvio> Seguimientos { get; set; }
 
-        public Envio(int nroTracking, decimal peso, Usuario empleado, Usuario cliente)
+        public Envio(decimal peso, Usuario empleado, Usuario cliente)
         {
-            NroTracking = nroTracking;
+            FechaCreacion = DateTime.Now;
             Empleado = empleado;
             Cliente = cliente;
+            EmpleadoId = empleado.Id;
+            ClienteId = cliente.Id;
             Peso = peso;
             Estado = EstadoEnvio.EN_PROCESO;
-            FechaCreacion = DateTime.Now;
             Seguimientos = new List<SeguimientoEnvio>();
+            NroTracking = GenerarNroTracking(cliente.Id);
+
+            Validar();
 
         }
-
-        public void Validar()
+        public Envio()
         {
-            if (NroTracking <= 0)
-            {
-                throw new Exception("El número de tracking debe ser mayor a 0.");
-            }
+            
+        }
+
+        public virtual void Validar()
+        {
             if (Peso <= 0)
             {
-                throw new Exception("El peso debe ser mayor a 0.");
+                throw new SinPesoException("El peso debe ser mayor a 0.");
             }
             if (Empleado == null)
             {
-                throw new Exception("El empleado no puede ser nulo.");
+                throw new SinEmpleadoException("El empleado no puede ser nulo.");
+            }
+            if (EmpleadoId <= 0)
+            {
+                throw new SinEmpleadoException("El ID del empleado debe ser mayor a 0.");
             }
             if (Cliente == null)
             {
-                throw new Exception("El cliente no puede ser nulo.");
+                throw new SinClienteException("El cliente no puede ser nulo.");
+            }
+            if (ClienteId <= 0)
+            {
+                throw new SinClienteException("El ID del cliente debe ser mayor a 0.");
             }
             if (Estado == EstadoEnvio.FINALIZADO && FechaEntrega == null)
             {
-                throw new Exception("La fecha de entrega debe estar definida si el estado es FINALIZADO.");
+                throw new SinFechaEntregaException("La fecha de entrega debe estar definida si el estado es FINALIZADO.");
             }
+            
         }
+
+        public virtual string GenerarNroTracking(int clienteId)
+        {
+            string fechaActual = DateTime.Now.ToString("yyyyMMddHHmmss");
+            return $"UYU{clienteId}{fechaActual}";
+        }
+
     }
 }

@@ -13,14 +13,23 @@ namespace Libreria.LogicaNegocio.Entidades
         public Direccion Direccion { get; set; }
         public bool? EntregaEficiente { get; set; }
         
-        public EnvioUrgente(int nroTracking, decimal peso, Usuario empleado, Usuario cliente, Direccion direccion, bool entregaEficiente) : base(nroTracking, peso, empleado, cliente)
+        public EnvioUrgente(decimal peso, Usuario empleado, Usuario cliente, Direccion direccion) : base(peso, empleado, cliente)
         {
             Direccion = direccion;
-            EntregaEficiente = entregaEficiente;
+            Validar();
         }
 
-        public EnvioUrgente() : base(0, 0, null, null)
+        public EnvioUrgente() : base()
         {
+        }
+
+        public override void Validar()
+        {
+            base.Validar();
+            if (Direccion == null)
+            {
+                throw new SinDireccionException("La dirección no puede ser nula.");
+            }
         }
 
         public void EvaluarEficienciaEntrega()
@@ -28,7 +37,7 @@ namespace Libreria.LogicaNegocio.Entidades
 
             if (!FechaEntrega.HasValue)
             {
-                throw new SinFechaDeEntrega("No se puede evaluar la eficiencia de un envío sin fecha de entrega.");
+                throw new SinFechaDeEntregaException("No se puede evaluar la eficiencia de un envío sin fecha de entrega.");
             }
 
             TimeSpan tiempoTranscurrido = FechaEntrega.Value - FechaCreacion;

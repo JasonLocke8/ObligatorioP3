@@ -59,20 +59,22 @@ namespace Libreria.LogicaAccesoDatos.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Descripcion")
-                        .IsRequired()
+                    b.Property<string>("Accion")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("EntidadId")
-                        .HasColumnType("int");
+                    b.Property<string>("Entidad")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("FechaAccion")
+                    b.Property<string>("EntidadId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Fecha")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("TipoAccion")
-                        .HasColumnType("int");
+                    b.Property<string>("Observaciones")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UsuarioId")
+                    b.Property<int?>("UsuarioId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -91,11 +93,6 @@ namespace Libreria.LogicaAccesoDatos.Migrations
                     b.Property<int>("ClienteId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasMaxLength(13)
-                        .HasColumnType("nvarchar(13)");
-
                     b.Property<int>("EmpleadoId")
                         .HasColumnType("int");
 
@@ -108,12 +105,18 @@ namespace Libreria.LogicaAccesoDatos.Migrations
                     b.Property<DateTime?>("FechaEntrega")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("NroTracking")
-                        .HasColumnType("int");
+                    b.Property<string>("NroTracking")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Peso")
                         .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("TipoEnvio")
+                        .IsRequired()
+                        .HasMaxLength(13)
+                        .HasColumnType("nvarchar(13)");
 
                     b.HasKey("Id");
 
@@ -123,7 +126,7 @@ namespace Libreria.LogicaAccesoDatos.Migrations
 
                     b.ToTable("Envios");
 
-                    b.HasDiscriminator().HasValue("Envio");
+                    b.HasDiscriminator<string>("TipoEnvio").HasValue("Envio");
 
                     b.UseTphMappingStrategy();
                 });
@@ -169,6 +172,9 @@ namespace Libreria.LogicaAccesoDatos.Migrations
                     b.Property<string>("Apellido")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Eliminado")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Email")
                         .IsRequired()
