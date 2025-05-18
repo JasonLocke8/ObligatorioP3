@@ -127,6 +127,20 @@
 
 ---
 
+## 🛠 API REST
+
+La aplicación también cuenta con una **API REST** que expone información detallada sobre los envíos registrados en el sistema. Actualmente, se encuentra disponible un endpoint que permite **consultar un envío específico por su número de tracking**, devolviendo:
+
+- 📦 Información general del envío.
+- 👤 Cliente asociado al envío.
+- 🧑‍💼 Funcionario que realizó el registro.
+- ⚖️ Peso del paquete.
+- 🚚 Tipo de envío (Común o Urgente).
+- 📅 Fechas relevantes (alta, entrega, seguimiento).
+- 📝 Historial completo de seguimientos.
+
+---
+
 ## 🧾 Licencia
 
 Este proyecto está distribuido bajo la licencia **MIT**.
