@@ -46,7 +46,7 @@
 
             @if (userRole == "Administrador" || userRole == "Funcionario")
             {
-                <a href="@Url.Action("AltaEnvio", "Usuario")" class="btn btn-info btn-square btn-md d-flex flex-column align-items-center justify-content-center">
+                <a href="@Url.Action("AltaEnvio", "Envio")" class="btn btn-info btn-square btn-md d-flex flex-column align-items-center justify-content-center">
                     <i class="bi bi-box fs-3"></i>
                     <span class="mt-1">Alta Envío</span>
                 </a>
@@ -54,7 +54,7 @@
 
             @if (userRole == "Administrador" || userRole == "Funcionario")
             {
-                <a href="@Url.Action("MostrarEnvios", "Usuario")" class="btn btn-warning btn-square btn-md d-flex flex-column align-items-center justify-content-center">
+                <a href="@Url.Action("Index", "Envio")" class="btn btn-warning btn-square btn-md d-flex flex-column align-items-center justify-content-center">
                     <i class="bi bi-truck fs-3"></i>
                     <span class="mt-1">Mostrar Envíos</span>
                 </a>

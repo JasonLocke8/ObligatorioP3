@@ -1,6 +1,7 @@
 ﻿using Libreria.DTOs.DTOs.DTOsEnvio;
 using Libreria.DTOs.Mappers;
 using Libreria.LogicaAplicacion.InterfacesCasosUso.ICUEnvios;
+using Libreria.LogicaNegocio.CustomExceptions.EnvioExceptions;
 using Libreria.LogicaNegocio.Entidades;
 using Libreria.LogicaNegocio.InterfacesRepositorios;
 using System;
@@ -40,6 +41,28 @@ namespace Libreria.LogicaAplicacion.CasosUso.CUEnvios
 
         }
 
+        public DTOEnvio ListarEnvioPorNroTracking(string nroTracking)
+        {
+            Envio envio = _repositorioEnvio.FindByNroTracking(nroTracking);
+
+            if (envio == null)
+            {
+                throw new EnvioNoExisteException("No se encontró el numero de tracking proporcionado.");
+            }
+
+            DTOEnvio dto = MapperEnvio.FromEnvioToDTOEnvio(envio);
+            return dto;
+
+        }
+
+        public List<DTOEnvio> ListarTodosLosEnvios()
+        {
+            List<Envio> envio = _repositorioEnvio.FindAll();
+
+            List<DTOEnvio> listaDTO = MapperEnvio.FromListEnvioToListDTOEnvio(envio);
+
+            return listaDTO;
+        }
     }
 }
 

@@ -1,6 +1,7 @@
 ﻿using Libreria.DTOs.DTOs.DTOsUsuario;
 using Libreria.LogicaAplicacion.InterfacesCasosUso.ICUAutenticacion;
 using Libreria.LogicaNegocio.CustomExceptions.AutenticacionExceptions;
+using Libreria.LogicaNegocio.CustomExceptions.UsuarioExceptions;
 using Libreria.LogicaNegocio.Entidades;
 using Libreria.LogicaNegocio.InterfacesRepositorios;
 using System;
@@ -15,18 +16,45 @@ namespace Libreria.LogicaAplicacion.CasosUso.CUAutenticacion
     public class CULogin : ICULogin
     {
         private IRepositorioUsuario _repositorioUsuario;
-        private IRepositorioAuditoria _repositorioAuditoria;
 
-        public CULogin(IRepositorioUsuario repositorioUsuario, IRepositorioAuditoria repositorioAuditoria)
+        public CULogin(IRepositorioUsuario repositorioUsuario)
         {
             _repositorioUsuario = repositorioUsuario;
-            _repositorioAuditoria = repositorioAuditoria;
+        }
+
+        public bool CambiarPassword(string email, string nuevaPassword)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(nuevaPassword))
+                {
+                    throw new CampoVacioException("Campos vacios.");
+                }
+                Usuario usuario = _repositorioUsuario.FindByEmail(email);
+                if (usuario == null || usuario.Eliminado)
+                {
+                    throw new UsuarioNoExisteException("Usuario no encontrado.");
+                }
+                usuario.Password = BCrypt.Net.BCrypt.HashPassword(nuevaPassword);
+                _repositorioUsuario.Update(usuario);
+                return true;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
         }
 
         public DTOUsuario ValidarLogin(DTOUsuario dto)
         {
             try
             {
+                if (dto.Password == null || dto.Email == null)
+                {
+                    throw new CampoVacioException("Campos vacios.");
+                }
+
                 Usuario usuario = _repositorioUsuario.FindByEmail(dto.Email);
 
 
@@ -35,13 +63,11 @@ namespace Libreria.LogicaAplicacion.CasosUso.CUAutenticacion
                     DTOUsuario ret = new DTOUsuario();
                     ret.Id = usuario.Id;
                     ret.Rol = usuario.Rol.ToString();
+                    ret.Email = usuario.Email;
                     return ret;
                 }
                 else
                 {
-                    Auditoria aud = new Auditoria(usuario.Id , "USE", "LOGIN", usuario.Id.ToString(), "Intento de login");
-                    _repositorioAuditoria.Auditar(aud);
-
                     throw new MalasCredenciales("Error de credenciales.");
                 }
             }

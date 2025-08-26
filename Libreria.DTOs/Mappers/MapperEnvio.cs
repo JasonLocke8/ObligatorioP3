@@ -3,11 +3,6 @@ using Libreria.LogicaNegocio.CustomExceptions.EnvioExceptions;
 using Libreria.LogicaNegocio.Entidades;
 using Libreria.LogicaNegocio.Enumerados;
 using Libreria.LogicaNegocio.VO;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Libreria.DTOs.Mappers
 {
@@ -76,7 +71,9 @@ namespace Libreria.DTOs.Mappers
                     Estado = envio.Estado.ToString(),
                     FechaCreacion = envio.FechaCreacion,
                     FechaEntrega = envio.FechaEntrega,
-                    TipoEnvio = envio is EnvioComun ? "comun" : envio is EnvioUrgente ? "urgente" : "desconocido"
+                    TipoEnvio = envio is EnvioComun ? "comun" : envio is EnvioUrgente ? "urgente" : "desconocido",
+                    Seguimientos = MapperSeguimientoEnvio.FromListSeguimientoToListDTOSeguimiento(envio.Seguimientos)
+
                 };
 
                 // Si es un EnvioUrgente, mapea la dirección y si tuvo entrega eficiente
@@ -113,7 +110,9 @@ namespace Libreria.DTOs.Mappers
                 Estado = envio.Estado.ToString(),
                 FechaCreacion = envio.FechaCreacion,
                 FechaEntrega = envio.FechaEntrega,
-                TipoEnvio = envio is EnvioComun ? "comun" : envio is EnvioUrgente ? "urgente" : "desconocido"
+                TipoEnvio = envio is EnvioComun ? "comun" : envio is EnvioUrgente ? "urgente" : "desconocido",
+                Seguimientos = MapperSeguimientoEnvio.FromListSeguimientoToListDTOSeguimiento(envio.Seguimientos)
+
             };
 
             if (envio is EnvioUrgente envioUrgente)

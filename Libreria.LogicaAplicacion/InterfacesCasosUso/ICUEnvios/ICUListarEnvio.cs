@@ -11,7 +11,11 @@ namespace Libreria.LogicaAplicacion.InterfacesCasosUso.ICUEnvios
     {
         List<DTOEnvio> ListarEnvios();
 
+        List<DTOEnvio> ListarTodosLosEnvios();
+
         DTOEnvio ListarEnvioPorId(int id);
+
+        DTOEnvio ListarEnvioPorNroTracking(string nroTracking);
 
     }
 }

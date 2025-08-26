@@ -14,13 +14,11 @@ namespace Libreria.LogicaAplicacion.CasosUso.CUUsuario
     public class CUEliminarUsuario : ICUEliminarUsuario
     {
         private IRepositorioUsuario _repositorioUsuario;
-        private IRepositorioEnvio _repositorioEnvio;
         private IRepositorioAuditoria _repositorioAuditoria;
 
-        public CUEliminarUsuario(IRepositorioUsuario repositorioUsuario, IRepositorioEnvio repositorioEnvio, IRepositorioAuditoria repositorioAuditoria)
+        public CUEliminarUsuario(IRepositorioUsuario repositorioUsuario, IRepositorioAuditoria repositorioAuditoria)
         {
             _repositorioUsuario = repositorioUsuario;
-            _repositorioEnvio = repositorioEnvio;
             _repositorioAuditoria = repositorioAuditoria;
         }
         public void EliminarUsuario(int id, int logueadoId)

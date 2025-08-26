@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Libreria.LogicaNegocio.Entidades
@@ -10,7 +11,10 @@ namespace Libreria.LogicaNegocio.Entidades
     {
         public int Id { get; set; }
         public int EnvioId { get; set; }
+        
+        [JsonIgnore]
         public Envio Envio { get; set; }
+        
         public string Comentario { get; set; }
         public DateTime FechaComentario { get; set; }
         public Usuario ComentarioEmpleado { get; set; }

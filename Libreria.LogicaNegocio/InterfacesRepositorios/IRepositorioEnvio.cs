@@ -16,6 +16,8 @@ namespace Libreria.LogicaNegocio.InterfacesRepositorios
         void EliminarEnvios(Usuario u);
 
         bool ExisteEnvio(int id);
+
+        Envio FindByNroTracking(string nro);
     }
 
 }

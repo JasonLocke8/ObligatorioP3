@@ -14,7 +14,7 @@ namespace Libreria.LogicaAplicacion.CasosUso.CUAgencia
 {
     public class CUListarAgencia : ICUListarAgencia
     {
-        private readonly IRepositorioAgencia _repositorioAgencia;
+        private IRepositorioAgencia _repositorioAgencia;
         public CUListarAgencia(IRepositorioAgencia repositorioAgencia)
         {
             _repositorioAgencia = repositorioAgencia;

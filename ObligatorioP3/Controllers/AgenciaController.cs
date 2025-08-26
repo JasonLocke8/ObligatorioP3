@@ -1,8 +1,7 @@
 ﻿using Libreria.DTOs.DTOs.DTOsAgencia;
-using Libreria.DTOs.DTOs.DTOsUsuario;
 using Libreria.LogicaAplicacion.InterfacesCasosUso.ICUAgencia;
-using Libreria.LogicaNegocio.CustomExceptions.UsuarioExceptions;
 using Microsoft.AspNetCore.Mvc;
+using ObligatorioP3.Filters;
 
 namespace ObligatorioP3.Controllers
 {
@@ -22,11 +21,13 @@ namespace ObligatorioP3.Controllers
             _cuEliminarAgencia = cuEliminarAgencia;
         }
 
+        [AdminAuthorize]
         public IActionResult Index()
         {
             return View();
         }
 
+        [AdminAuthorize]
         public IActionResult MostrarAgencias()
         {
             try
@@ -41,6 +42,7 @@ namespace ObligatorioP3.Controllers
             }
         }
 
+        [AdminAuthorize]
         [HttpPost]
         public IActionResult EliminarAgencia(int id)
         {
@@ -56,6 +58,7 @@ namespace ObligatorioP3.Controllers
             return RedirectToAction("MostrarAgencias");
         }
 
+        [AdminAuthorize]
         public IActionResult ModificarAgencia(int id)
         {
             try
@@ -70,6 +73,7 @@ namespace ObligatorioP3.Controllers
             }
         }
 
+        [AdminAuthorize]
         [HttpPost]
         public IActionResult ModificarAgencia(DTOAgencia dtoAgencia)
         {
@@ -86,11 +90,13 @@ namespace ObligatorioP3.Controllers
 
         }
 
+        [AdminAuthorize]
         public IActionResult AltaAgencia()
         {
             return View();
         }
 
+        [AdminAuthorize]
         [HttpPost]
         public IActionResult AltaAgencia(DTOAgencia dtoAgencia)
         {

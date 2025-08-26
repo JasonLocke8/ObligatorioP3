@@ -28,6 +28,7 @@ namespace Libreria.LogicaAccesoDatos.Repositorios
             .Include(e => e.Cliente)
             .Include(e => e.Empleado)
             .Include(e => (e as EnvioComun).AgenciaDestino)
+            .Include(e => e.Seguimientos)
             .FirstOrDefault(e => e.Id == id);
 
         }
@@ -47,7 +48,7 @@ namespace Libreria.LogicaAccesoDatos.Repositorios
             return _context.Envios
                 .Include(e => e.Cliente)
                 .Include(e => e.Empleado)
-
+                .Include(e => e.Seguimientos)
                 .Where(e =>
                     (e is EnvioUrgente &&
                      (((EnvioUrgente)e).Direccion == null ||
@@ -78,6 +79,7 @@ namespace Libreria.LogicaAccesoDatos.Repositorios
             return _context.Envios
                 .Include(e => e.Cliente)
                 .Include(e => e.Empleado)
+                .Include(e => e.Seguimientos)
                 .Where(e =>
                     e.Estado == EstadoEnvio.EN_PROCESO &&
                     (
@@ -103,6 +105,16 @@ namespace Libreria.LogicaAccesoDatos.Repositorios
 
             _context.Envios.RemoveRange(enviosAEliminar);
             _context.SaveChanges();
+        }
+
+        public Envio FindByNroTracking(string nro)
+        {
+            return _context.Envios
+                .Include(e => e.Cliente)
+                .Include(e => e.Empleado)
+                .Include(e => (e as EnvioComun).AgenciaDestino)
+                .Include(e => e.Seguimientos)
+                .FirstOrDefault(e => e.NroTracking == nro);
         }
     }
 }

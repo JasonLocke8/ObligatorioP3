@@ -20,5 +20,27 @@ namespace Libreria.DTOs.Mappers
             return seguimiento;
         }
 
+        public static List<DTOSeguimientoEnvio> FromListSeguimientoToListDTOSeguimiento(List<SeguimientoEnvio> lista)
+        {
+            List<DTOSeguimientoEnvio> resultado = new List<DTOSeguimientoEnvio>();
+
+            if (lista == null) return resultado;
+
+            foreach (SeguimientoEnvio seguimiento in lista)
+            {
+                DTOSeguimientoEnvio dto = new DTOSeguimientoEnvio
+                {
+                    Id = seguimiento.Id,
+                    EnvioId = seguimiento.EnvioId,
+                    Fecha = seguimiento.FechaComentario,
+                    Comentario = seguimiento.Comentario,
+                    IdEmpleado = seguimiento.ComentarioEmpleado != null ? seguimiento.ComentarioEmpleado.Id : 0
+                };
+                resultado.Add(dto);
+            }
+
+            return resultado;
+        }
+
     }
 }

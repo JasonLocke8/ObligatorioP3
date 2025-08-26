@@ -10,5 +10,6 @@ namespace Libreria.LogicaAplicacion.InterfacesCasosUso.ICUAutenticacion
     public interface ICULogin
     {
         DTOUsuario ValidarLogin(DTOUsuario dto);
+        bool CambiarPassword(string email, string nuevaPassword);
     }
 }
